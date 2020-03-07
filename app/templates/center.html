@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %}
+Mamphi-Studie Verwaltung
+{% endblock %}
+{% block content %}
+<main>
+    <section>
+        <div>
+            <h2>Liste der Zentren</h2>
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td>Land</td>
+                    <td>Ort</td>
+                    <td>Pr&#xFC;fer</td>
+                    <td>Monitor</td>
+                </tr>
+                {% for zentrum in zentren %}
+                <tr>
+                    <td>{{ zentrum['Zentrum_Id'] }}</td>
+                    {% if zentrum['Land'] == 'D' %}
+                    <td>Deutschland</td>
+                    {% else %}
+                    <td>Gro&#xDF;britanien</td>
+                    {% endif %}
+                    <td>{{ zentrum['Ort'] }}</td>
+                    <td>{{ zentrum['Pruefer'] }}</td>
+                    <td>{{ zentrum['Monitor'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </section>
+</main>
+{% endblock content %}

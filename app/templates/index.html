@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Mamphi-Studie</title>
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+<header>
+    <h1>Willkommen auf der Webanwendung zur Mamphi-Studie!</h1>
+</header>
+<main>
+    <section>
+        <h1>Beschreibung der Studie</h1>
+        <div>
+            <table>
+                <tr>
+                    <td>Design:</td>
+                    <td>Doppelbind, randomisiert, Parallelgruppen (Mamphi vs. Placebo)</td>
+                </tr>
+                <tr>
+                    <td>Indikation:</td>
+                    <td>chronische Kopfschmerzen</td>
+                </tr>
+                <tr>
+                    <td>Studienzentren</td>
+                    <td>Deutschland und Großbritannien</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <section>
+        <h1>Zentrumliste</h1>
+        <table>
+            <tr>
+                <td>Patienten_ID</td>
+                <td>Zentrum</td>
+                <td>Ort</td>
+                <td>Prüfer</td>
+                <td>Monitor</td>
+            </tr>
+            {% for zentrum in zentren %}
+            <tr>
+                <td>{{ zentrum[0] }}</td>
+                {% if zentrum[1] == 'D' %}
+                <td>Deutschland</td>
+                {% else %}
+                <td>Großbritanien</td>
+                {% endif %}
+                <td>{{ zentrum[2] }}</td>
+                <td>{{ zentrum[3] }}</td>
+                <td>{{ zentrum[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <section>
+        <h1>Patientenliste</h1>
+    </section>
+    <section>
+        <h1>Wochenliche Liste: Anzahl Studienpatienten pro Zentrum und Land</h1>
+    </section>
+
+    <section>
+        <h1>Patienteneinwilligungen</h1>
+    </section>
+    <section>
+        <h1>Monitoring-Plan</h1>
+    </section>
+</main>
+<footer>
+    <p>Studienmanagement und Software, Sommersemester 2019</p>
+    <p>Software zur Verwaltung der Mamphi-Studie &copy; 2019-2020 FHDO Master MI</p>
+    <p>Maintain and develop by Beauclair Ngnintedem D.</p>
+</footer>
+</body>
+</html>

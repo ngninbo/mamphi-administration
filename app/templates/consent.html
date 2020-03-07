@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% block title %}
+Mamphi-Studie
+{% endblock %}
+{% block content %}
+<main id="informed_consent">
+    <section>
+        <div>
+            <h2>Liste der Patienten Einwilligungen</h2>
+            <table id="consent-table">
+                <tr>
+                    <td>Patienten_ID</td>
+                    <td>Zentrum</td>
+                    <td>Einwillung erteilt</td>
+                    <td>Datum der Einwilligung</td>
+                </tr>
+                {% for consent in consents %}
+                <tr>
+                    <td>{{ consent['Patient_Id'] }}</td>
+                    <td>{{ consent['Zentrum'] }}</td>
+                    {% if consent['Einwilligung'] == 'nan' %}
+                    <td></td>
+                    {% else %}
+                    <td>{{ consent['Einwilligung'] }}</td>
+                    {% endif %}
+                    {% if consent['Datum'] == 'NaT' %}
+                    <td></td>
+                    {% else %}
+                    <td>{{ consent['Datum'] }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div>
+            <h2>Liste von Patienten, bei denen die Einwillung unvollständig ist</h2>
+            <table id="incomplete_consent_table">
+                <tr>
+                    <td>Patienten_ID</td>
+                    <td>Zentrum</td>
+                    <td>Einwillung erteilt</td>
+                    <td>Datum der Einwilligung</td>
+                </tr>
+                {% for consent in incomplete_consents %}
+                <tr>
+                    <td>{{ consent['Patient_Id'] }}</td>
+                    <td>{{ consent['Zentrum'] }}</td>
+                    <td>{{ consent['Einwilligung'] }}</td>
+                    <td>{{ consent['Datum'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div>
+            <h2>Liste von Patienten bei denen die Einwillung fehlt</h2>
+            <table id="missing_consent_table">
+                <tr>
+                    <td>Patienten_ID</td>
+                    <td>Zentrum</td>
+                    <td>Einwillung erteilt</td>
+                    <td>Datum der Einwilligung</td>
+                </tr>
+                {% for consent in missing_consents %}
+                <tr>
+                    <td>{{ consent['Patient_Id'] }}</td>
+                    <td>{{ consent['Zentrum'] }}</td>
+                    <td>{{ consent['Einwilligung'] }}</td>
+                    <td>{{ consent['Datum'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div>
+            <h2>Liste von Patienten bei denen die Einwilligung nach der Randomisierung kommt.</h2>
+            <table id="consent_after_randomization_table">
+                <tr>
+                    <td>Patienten_ID</td>
+                    <td>Zentrum</td>
+                    <td>Einwillung erteilt</td>
+                    <td>Datum der Einwilligung</td>
+                </tr>
+                {% for consent in consents_after_randomization %}
+                <tr>
+                    <td>{{ consent['Patient_Id'] }}</td>
+                    <td>{{ consent['Zentrum'] }}</td>
+                    <td>{{ consent['Einwilligung'] }}</td>
+                    <td>{{ consent['Datum'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock content %}

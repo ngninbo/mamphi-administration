@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block title %}
+Mamphi-Studie Verwaltung
+{% endblock %}
+{% block content %}
+<main>
+    <section>
+        <div>
+            <h2>Zweite Woche der Randomisierung</h2>
+            <table>
+                <tr>
+                    <td>Patienten_ID</td>
+                    <td>Zentrum</td>
+                    <td>Behandlungsarm</td>
+                    <td>Datum der Randomisierung</td>
+                </tr>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result['Patient_Id'] }}</td>
+                    <td>{{ result['Zentrum'] }}</td>
+                    <td>{{ result['Behandlungsarm'] }}</td>
+                    <td>{{ result['Datum'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock content %}

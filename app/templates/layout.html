@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mamphi-Studie Verwaltung</title>
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body style="margin-bottom: 1%">
+<header>
+    <h1>Willkommen auf der Webanwendung zur Mamphi-Studie Verwaltung!</h1>
+    <div>
+        <div class="navbar">
+            <a href="{{ url_for('description') }}" class="navbar-brand">Beschreibung</a>
+            <a href="{{ url_for('center') }}" class="navbar-item">Zentrumliste</a>
+            <a href="{{ url_for('consent') }}" class="navbar-item">Patienteneinwilligungen</a>
+            <a href="{{ url_for('random_w_1') }}" class="navbar-item">Randomisierungswoche 1</a>
+            <a href="{{ url_for('random_w_2') }}" class="navbar-item">Randomisierungswoche 2</a>
+            <a href="#" class="navbar-item">Monitoringsplan</a>
+
+        </div>
+    </div>
+</header>
+<main>
+    <div class="body-content">
+        {% block content %}
+        {% endblock %}
+        <hr/>
+    </div>
+</main>
+
+<footer>
+    <p>Studienmanagement und Software, Sommersemester 2019</p>
+    <p>Software zur Verwaltung der Mamphi-Studie &copy; 2019-2020 FHDO Master MI</p>
+    <p>Developed and maintained by Beauclair Ngnintedem D.</p>
+</footer>
+
+</body>
+</html>
