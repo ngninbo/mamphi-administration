@@ -5,6 +5,7 @@ This is the repository for the mamphi-project develop during the subject study m
 `python setup.py install`
 
 To run the Rest-api use
+
 `cd mamphi-api/api`
 
 `python main.py`
