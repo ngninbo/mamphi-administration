@@ -7,8 +7,8 @@
       <router-link class="navbar-item" to="/description">Beschreibung</router-link>
       <router-link class="navbar-item" to="/center">Zentren</router-link>
       <router-link class="navbar-item" to="/consent">Patienteneinwilligungen</router-link>
-      <router-link class="navbar-item" to="/firstrandomization">Randomisierung1</router-link>
-      <router-link class="navbar-item" to="/secondrandomization">Randomisierung2</router-link>
+      <router-link class="navbar-item" to="/firstrandomization">Erste Randomisierung Woche</router-link>
+      <router-link class="navbar-item" to="/secondrandomization">Zweite Randomisierung Woche</router-link>
       <router-link class="navbar-item" to="/monitorplan">Monitorplan</router-link>
     </nav>
     <main>

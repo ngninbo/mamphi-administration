@@ -1,7 +1,7 @@
 <template>
 <div>
     <consent-table v-bind:consents="incompleted_consents"></consent-table>
-    <button v-bind:click="navBack()">Zurück zur Liste der Einwilligungen</button>
+    <!--<button v-bind:click="navBack()">Zurück zur Liste der Einwilligungen</button>-->
 </div>
 </template>
 
