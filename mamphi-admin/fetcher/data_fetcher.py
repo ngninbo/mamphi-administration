@@ -250,19 +250,8 @@ class MamphiDataFetcher:
         return results_json
 
     def get_number_of_patient_per_center_by_week_1(self):
-        conn = sqlite3.connect(self.mamphi_db)
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        sql = "SELECT * FROM Random_Woche_1"
 
-        cursor.execute(sql)
-
-        response = cursor.fetchall()
-
-        conn.commit()
-        conn.close()
-
-        results = json.dumps([dict(idx) for idx in response])
+        results = self.fetch_rand_w1()
 
         data = pd.read_json(results)
 
@@ -297,19 +286,8 @@ class MamphiDataFetcher:
         return json.dumps(results)
 
     def get_number_of_patient_per_center_by_week_2(self):
-        conn = sqlite3.connect(self.mamphi_db)
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        sql = "SELECT * FROM Random_Woche_2"
 
-        cursor.execute(sql)
-
-        response = cursor.fetchall()
-
-        conn.commit()
-        conn.close()
-
-        results = json.dumps([dict(idx) for idx in response])
+        results = self.fetch_rand_w2()
 
         data = pd.read_json(results)
 
