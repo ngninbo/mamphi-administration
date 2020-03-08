@@ -1,12 +1,28 @@
 <template>
 <div>
-    <consent-table v-bind:consents="missing_consents"></consent-table>
-    <!--<button v-bind:click="navBack()">Zurück zur Liste der Einwilligungen</button>-->
+    <table>
+          <thead>
+            <tr>
+              <td>Patienten_ID</td>
+              <td>Zentrum</td>
+              <td>Einwillung erteilt</td>
+              <td>Datum der Einwilligung</td>
+            </tr>
+          </thead>
+          <tbody id="consent-list">
+            <consent-card
+              class="consent-item"
+              v-for="consent in missing_consents"
+              v-bind:consent="consent"
+              v-bind:key="consent.Patient_Id"
+            ></consent-card>
+          </tbody>
+        </table>
 </div>
 </template>
 
 <script>
-import ConsentTable from './ConsentTable';
+import ConsentCard from './ConsentCard'
 export default {
     name: 'consent-missing',
     data: function(){
@@ -15,13 +31,7 @@ export default {
         };
     },
     components: {
-        ConsentTable: ConsentTable
-    },
-
-    methods: {
-        navBack: function(){
-            this.$router.push('/description');
-        }
+        ConsentCard: ConsentCard
     },
 
     mounted(){

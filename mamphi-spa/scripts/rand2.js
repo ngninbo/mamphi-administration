@@ -1,3 +1,8 @@
+var data = "";
+fetch('http://127.0.0.1:5000/mamphi/patient/center/week2')
+    .then(response => response.json())
+    .then(json => (data = JSON.parse(json)))
+
 let rand_w2_list = document.querySelector("#rand-w2-btn");
 
 rand_w2_list.addEventListener('click', function() {
@@ -6,42 +11,22 @@ rand_w2_list.addEventListener('click', function() {
     body.innerHTML = `<section>
     <div>
         <h2>Randomisierung zweite Woche</h2>
-        <table>
-        <thead>
-            <tr>
-                <td>Patient_ID</td>
-                <td>Zentrum</td>
-                <td>Behandlungsarm</td>
-                <td>Datum</td>
-            </tr>
-            </thead>
-            <tbody id=rand-list>
-            </tbody>
-        </table>
+        <p>
+        <select id="selection">
+        <option value="Null">Bitte Liste auswählen</option>
+        <option value="1">Vollständige Liste</option>
+        <option value="2">Wochenliche Liste Deutschland: Anzahl der Patienten pro Zentrum</option>
+        <option value="3">Wochenliche Liste Großbritanien: Anzahl der Patienten pro Zentrum</option>
+        </select><button id="rand-list-btn">Anzeigen</button>
+        </p>
+        <div id="rand-week1-table">
+        </div>
     </div>`
 
-    // 1. XHR-Instanz erstellen
-    let xhr = new XMLHttpRequest();
-    // 2. HTTP-Anfrage initialisieren (hier:
-    // REST-Service, der die Liste von Zentren liefert)
-    xhr.open("Get", "http://127.0.0.1:5000/mamphi/random-week2");
-    // 3 Gewünschtes Datenformat setzen
-    xhr.responseType = "json"
-        // 4. Anfrage senden
-    xhr.send();
-    // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, sobald die Antwort vollstandig vorliegt
-    xhr.onload = () => {
-        let body = document.getElementById("rand-list");
+    let randbtn = document.getElementById("rand-list-btn");
 
-        for (let patient of JSON.parse(xhr.response)) {
-            let prop = document.createElement("tr");
+    randbtn.addEventListener('click', function() {
+        displayTable();
+    });
 
-            prop.innerHTML = `<td>${patient.Patient_Id}</td>
-                                <td>${patient.Zentrum}</td>
-                                <td>${patient.Behandlungsarm}</td>
-                                <td>${patient.Datum}</td>`;
-
-            body.appendChild(prop);
-        }
-    };
 });

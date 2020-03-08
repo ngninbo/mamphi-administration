@@ -7,6 +7,18 @@ Mamphi-Studie
     <section>
         <div>
             <h2>Liste der Patienten Einwilligungen</h2>
+            <div>
+                <p>
+                    <label>Einwillungen:</label>
+                    <select id="selected-option">
+                        {% for option in options %}
+                        <option value="{{ option['value'] }}">{{option['text']}}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- TODO display the consent table based on the user selection-->
+                    <button id="list-show-btn">Anzeigen</button>
+                </p>
+            </div>
             <table id="consent-table">
                 <tr>
                     <td>Patienten_ID</td>

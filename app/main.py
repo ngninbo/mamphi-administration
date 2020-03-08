@@ -3,7 +3,7 @@ from flask import Flask, render_template
 # from admin.export_data_to_database import MamphiData
 import json
 
-# Remove comments to export data from excel sheet to db
+# TODO Remove comments to export data from excel sheet to database if database not available
 # data = MamphiData()
 # data.export_data()
 # db = data.db_filename
@@ -33,8 +33,17 @@ def consent():
     missing_consents = json.loads(fetcher.fetch_missing_consent())
     consents_after_randomization = json.loads(fetcher.fetch_consent_after_randomisation())
 
+    options = [
+        {'text': "Bitte Liste auswählen", 'value': None},
+        {'text': "Vollstandige Liste der Einwilligungen", 'value': 1},
+        {'text': "Liste der fehlenden Einwilligungen", 'value': 2},
+        {'text': "Liste der unvollständigen Einwillungen", 'value': 3},
+        {'text': "Liste der verspätete Einwilligungen", 'value': 4}
+    ]
+
     return render_template("consent.html", consents=consents, incomplete_consents=incomplete_consents,
-                           missing_consents=missing_consents, consents_after_randomization=consents_after_randomization)
+                           missing_consents=missing_consents, consents_after_randomization=consents_after_randomization,
+                           options=options)
 
 
 @app.route("/mamphi/randomisation%week=1")

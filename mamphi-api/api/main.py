@@ -51,5 +51,17 @@ def get_ran_w2():
     return jsonify(fetcher.fetch_rand_w2())
 
 
+@app.route('/mamphi/patient/center/week1')
+@cross_origin()
+def get_number_of_patient_per_center_by_week_1():
+    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_1())
+
+
+@app.route('/mamphi/patient/center/week2')
+@cross_origin()
+def get_number_of_patient_per_center_by_week_2():
+    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_2())
+
+
 if __name__ == '__main__':
     app.run()
