@@ -3,6 +3,10 @@ let consent_btn = document.getElementById("consent-list-btn");
 consent_btn.addEventListener('click', function() {
     let body = document.getElementById("app");
 
+    /*
+    TODO add function for creating and deleting consent
+    */
+
     body.innerHTML = `<section>
     <div>
         <p>

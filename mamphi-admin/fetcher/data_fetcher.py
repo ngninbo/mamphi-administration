@@ -320,3 +320,7 @@ class MamphiDataFetcher:
         results = {'Germany': list_german, 'UK': list_uk}
 
         return json.dumps(results)
+
+# TODO implement methods for adding and deleting center from database
+# TODO Same for consent
+# TODO implement method for fetching monitoring plan from backend

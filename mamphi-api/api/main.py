@@ -62,6 +62,9 @@ def get_number_of_patient_per_center_by_week_1():
 def get_number_of_patient_per_center_by_week_2():
     return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_2())
 
+# TODO implement api for adding and deleting center and consent via httpRequest
+# TODO implement api for fetching monitoring plan
+
 
 if __name__ == '__main__':
     app.run()

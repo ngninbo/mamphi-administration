@@ -2,7 +2,9 @@ let center_list = document.querySelector("#center-list-btn");
 
 center_list.addEventListener('click', function() {
     let body = document.getElementById("app");
-
+    /*
+    TODO Add function for creating and deleting center
+    */
     body.innerHTML = `<section>
     <div>
         <h2>Liste der Zentren</h2>
