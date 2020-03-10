@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from fetcher.data_fetcher import MamphiDataFetcher
 from flask_cors import CORS, cross_origin
+import json
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -43,6 +44,15 @@ def get_center():
 @cross_origin()
 def get_rand_w1():
     return jsonify(fetcher.fetch_rand_w1())
+
+
+@app.route('/mamphi/center/update', methods=["POST"])
+@cross_origin()
+def upload_center():
+    center_json = request.get_json()
+    print(center_json)
+    fetcher.update_zentren(json.dumps(center_json))
+    return jsonify(center_json)
 
 
 @app.route('/mamphi/random-week2')

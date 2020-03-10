@@ -32,8 +32,8 @@ class Mamphi:
         # Create rows of value
         rows = center_data.values
 
-        for i in range(len(rows)):
-            value = "({},'{}','{}','{}','{}')".format(rows[i][0], rows[i][1], rows[i][2], rows[i][3], rows[i][4])
+        for row in rows:
+            value = str(tuple(row))
             statement = "INSERT INTO Zentren VALUES" + value
             try:
                 cursor.execute(statement)
@@ -71,8 +71,8 @@ class Mamphi:
         # Create rows of values
         rows = consent_data.values
 
-        for i in range(len(rows)):
-            values = "({},{},'{}','{}')".format(rows[i][0], rows[i][1], rows[i][2], rows[i][3])
+        for row in rows:
+            values = str(tuple(row))
             insert_statement = "INSERT INTO Informed_consent VALUES" + values
 
             try:
@@ -112,8 +112,8 @@ class Mamphi:
 
         rows = random_week1_data.values
 
-        for i in range(len(rows)):
-            value = "({},{},'{}','{}')".format(rows[i][0], rows[i][1], rows[i][2], rows[i][3])
+        for row in rows:
+            value = str(tuple(row))
 
             sql = "INSERT INTO Random_Woche_1 VALUES" + value
 
@@ -150,8 +150,8 @@ class Mamphi:
 
         rows = random_week2_data.values
 
-        for i in range(len(rows)):
-            value = "({},{},'{}','{}')".format(rows[i][0], rows[i][1], rows[i][2], rows[i][3])
+        for row in rows:
+            value = str(tuple(row))
 
             sql = "INSERT INTO Random_Woche_2 VALUES" + value
 

@@ -65,10 +65,100 @@ class MamphiDataFetcher:
 
         return results_json
 
-    def update_zentren(self, value):
+    def get_center_german(self):
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        statement = "SELECT * FROM Zentren WHERE Land = 'D'"
+
+        cursor.execute(statement)
+        results = cursor.fetchall()
+
+        conn.commit()
+        conn.close()
+        # results_json = json.dumps([dict(ix) for ix in results])
+        list_patient = json.dumps([dict(ix) for ix in results])
+        # number_patient = len(list_patient)
+
+        return list_patient
+
+    def get_center_uk(self):
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        statement = "SELECT * FROM Zentren WHERE Land = 'GB'"
+        cursor.execute(statement)
+        results = cursor.fetchall()
+
+        conn.commit()
+        conn.close()
+
+        uk_center = json.dumps([dict(ix) for ix in results])
+        # number_patient = len(list_patient)
+        return uk_center
+
+    def get_center_by_land(self, land):
+
+        if land == "Germany":
+            conn = sqlite3.connect(self.mamphi_db)
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            statement = "SELECT * FROM Zentren WHERE Land = 'D'"
+
+            cursor.execute(statement)
+            results = cursor.fetchall()
+
+            conn.commit()
+            conn.close()
+            german_center = json.dumps([dict(ix) for ix in results])
+            # number_patient = len(list_patient)
+            return german_center
+
+        elif land == "UK":
+            conn = sqlite3.connect(self.mamphi_db)
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            statement = "SELECT * FROM Zentren WHERE Land = 'GB'"
+            cursor.execute(statement)
+            results = cursor.fetchall()
+
+            conn.commit()
+            conn.close()
+            uk_center = json.dumps([dict(ix) for ix in results])
+            # number_patient = len(list_patient)
+            return uk_center
+
+    def update_zentren(self, center_json):
+        """
+
+        :rtype: object
+        :param center_json: json string of the value to be inserted in the database
+        """
+        center = json.loads(center_json)
+
+        # Compute center Id manually
+        values = []
+        if center['Land'] == "D":
+            german_center = self.get_center_german()
+            german_center = pd.read_json(german_center)
+            zentrum_id = german_center['Zentrum_Id'].max() + 1
+            values.append(zentrum_id)
+        else:
+            uk_center = self.get_center_uk()
+            uk_center = pd.read_json(uk_center)
+            zentrum_id = uk_center['Zentrum_Id'].max() + 1
+            values.append(zentrum_id)
+
+        for idx in center.values():
+            values.append(idx)
+
         conn = sqlite3.connect(self.mamphi_db)
         cursor = conn.cursor()
-        statement = "INSERT INTO Zentren VALUES" + value
+        statement = "INSERT INTO Zentren VALUES" + str(tuple(values))
         try:
             cursor.execute(statement)
 
@@ -148,7 +238,7 @@ class MamphiDataFetcher:
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        statement = "SELECT * FROM Zentren WHERE Land = 'UK'"
+        statement = "SELECT * FROM Zentren WHERE Land = 'GB'"
         cursor.execute(statement)
         results = cursor.fetchall()
 
@@ -182,7 +272,7 @@ class MamphiDataFetcher:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
 
-            statement = "SELECT * FROM Zentren WHERE Land = 'UK'"
+            statement = "SELECT * FROM Zentren WHERE Land = 'GB'"
             cursor.execute(statement)
             results = cursor.fetchall()
 
