@@ -181,10 +181,23 @@ class MamphiDataFetcher:
 
         conn.close()
 
-    def update_consent(self, value):
+    def update_consent(self, consent_json):
+
+        consent_item = json.loads(consent_json)
+        values = []
+        # compute patient id manually
+        consent_list = self.fetch_consent()
+        consent_list = pd.read_json(consent_list)
+        patient_id = consent_list['Patient_Id'].max() + 1
+
+        values.append(patient_id)
+
+        for idx in consent_item.values():
+            values.append(idx)
+
         conn = sqlite3.connect(self.mamphi_db)
         cursor = conn.cursor()
-        statement = "INSERT INTO Informed_consent VALUES" + value
+        statement = "INSERT INTO Informed_consent VALUES" + str(tuple(values))
         try:
             cursor.execute(statement)
 

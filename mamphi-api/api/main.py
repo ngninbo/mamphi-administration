@@ -55,6 +55,15 @@ def upload_center():
     return jsonify(center_json)
 
 
+@app.route('/mamphi/consents/update', methods=["POST"])
+@cross_origin()
+def upload_consent():
+    consent_json = request.get_json()
+    print(consent_json)
+    fetcher.update_consent(json.dumps(consent_json))
+    return jsonify(consent_json)
+
+
 @app.route('/mamphi/random-week2')
 @cross_origin()
 def get_ran_w2():
