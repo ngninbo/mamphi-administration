@@ -17,21 +17,39 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <p><button id="center-add-btn" v-on:click="setIsClick()">Neues Zentrum erstellen</button></p>
+        <div id="center-form">
+            <span v-if="isClick == true">
+                <center-form></center-form>
+            </span>
+            <span v-else></span> 
+        </div>
+    </div>
 </section>
 </template>
 
 <script>
 import CenterCard from './CenterCard'
+import CenterForm from './CenterForm'
 
 export default {
     name: 'center-list',
     data: function(){
         return {
-            list: []
+            list: [],
+            isClick: false
         };
     },
     components: {
-        CenterCard: CenterCard
+        CenterCard: CenterCard,
+        CenterForm: CenterForm
+    },
+
+    methods: {
+        setIsClick() {
+            this.isClick = true;
+        }
     },
 
     mounted(){

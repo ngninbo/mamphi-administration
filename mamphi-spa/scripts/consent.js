@@ -48,8 +48,8 @@ function consentForm() {
         consentForm.innerHTML = `<p><label for="zentrum">Zentrum: </label>
                                 <select id="zentrum">
                                 <option value="Null"><option>
-                                <select></p>
-                                <p><label for="informed-consent">Einwilligung erteilt?: <label>
+                                </select></p>
+                                <p><label for="informed-consent">Einwilligung erteilt?: </label>
                                 <select id="informed-consent">
                                 <option value="Null"></option>
                                 <option value="ja" name="ja">Ja</option>

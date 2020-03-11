@@ -3,6 +3,10 @@ let consent_btn = document.getElementById("consent-list-btn");
 consent_btn.addEventListener('click', function() {
     let body = document.getElementById("app");
 
+    /*
+    TODO add function for creating and deleting consent
+    */
+
     body.innerHTML = `<section>
     <div>
         <p>
@@ -16,6 +20,10 @@ consent_btn.addEventListener('click', function() {
             </select><button id="list-show-btn">Anzeigen</button>
         </p>
         <div id="consent-table"></div>
+        <div id="verwaltung">
+        <p><button id="consent-add-btn">Neue Eintrag zur Einwilligungsliste erstellen</button></p>
+        <div id="consent-form"></div>
+        </div>
     </div>`;
 
     let display = document.getElementById("list-show-btn");
@@ -23,7 +31,76 @@ consent_btn.addEventListener('click', function() {
     display.addEventListener('click', function() {
         displayConsents();
     });
+
+    consentForm();
 });
+
+function consentForm() {
+    let consentbtn = document.getElementById("consent-add-btn");
+    var center_table = "";
+    fetch('http://127.0.0.1:5000/mamphi/center')
+        .then(response => response.json())
+        .then(json => (center_table = JSON.parse(json)))
+
+    consentbtn.addEventListener("click", function() {
+        let consentForm = document.getElementById("consent-form");
+
+        consentForm.innerHTML = `<p><label for="zentrum">Zentrum: </label>
+                                <select id="zentrum">
+                                <option value="Null"><option>
+                                <select></p>
+                                <p><label for="informed-consent">Einwilligung erteilt?: <label>
+                                <select id="informed-consent">
+                                <option value="Null"></option>
+                                <option value="ja" name="ja">Ja</option>
+                                <option value="nein" name="nein">Nein</option>
+                                </select></p>
+                                <p><label for="datum">Datum: </label>
+                                <input id="datum" type="date"></input></p>
+                                <p>
+                                <button id="save-consent-btn">Speichern</button>
+                                </p>`;
+
+        let zentrum = document.getElementById("zentrum");
+
+        for (let center of center_table) {
+            let option = document.createElement("option");
+            option.setAttribute("value", center.Zentrum_Id);
+            option.innerHTML = center.Zentrum_Id;
+
+            zentrum.append(option);
+        }
+
+        let consent_addbtn = document.getElementById("save-consent-btn");
+
+        consent_addbtn.addEventListener('click', function() {
+            var informed_consent = {
+                Zentrum: parseInt(document.getElementById("zentrum").value),
+                Einwilligung: document.getElementById("informed-consent").value,
+                Datum: document.getElementById("datum").value
+            };
+            console.log(informed_consent);
+            uploadConsentTable(informed_consent);
+        });
+    });
+};
+
+function uploadConsentTable(consent) {
+    // 1. XHR-Instanz erstellen
+    let xhr = new XMLHttpRequest();
+    // 2. HTTP-Anfrage initialisieren
+    xhr.open("Post", "http://127.0.0.1:5000/mamphi/consents/update");
+    // 3 HTTP-Header für das Datenformat in der Anfrage setzen
+    xhr.setRequestHeader("Content-Type", "application/json");
+    // 4. Gewünsche Datenformat für die Antwort setzen und Anfrage senden (hier mit JSON-Daten)
+    xhr.responseType = "json";
+    xhr.send(JSON.stringify(consent));
+    // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen,
+    // sobald die Antwort vollstandig vorliegt
+    xhr.onload = () => {
+        alert("Ein neues Zentrum wurde erstellt!");
+    };
+};
 
 function makeTable() {
     consent_table = document.getElementById("consent-table");
@@ -62,7 +139,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${ patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -154,4 +231,4 @@ function displayConsents() {
             };
             break;
     }
-}
+};

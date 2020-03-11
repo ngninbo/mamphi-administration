@@ -3,29 +3,37 @@
     <section>
       <h2>Liste der Patienten Einwilligungen</h2>
     <div>
-      <p>
+      <p><label>Bitte eine Liste auswählen: </label>
       <select name="consentChoice" v-model="choice" class="consent-mgmnt">
-        <option v-for="option in options" v-bind:key="option.value">{{ option.text }}</option>
+        <option v-for="element in options" v-bind:key="element.value">{{ element.text }}</option>
       </select>
-      <button>Anzeigen</button>
       </p>
     </div>
     <div id="consent-table">
-        <span v-if="choice ==='1'">
+        <span v-if="choice ==='Vollstandige Liste der Einwilligungen'">
           <consent-table></consent-table>
         </span>
-        <span v-else-if="choice === '2'">
+        <span v-else-if="choice == 'Liste der fehlenden Einwilligungen'">
           <consent-missing></consent-missing>
         </span>
-        <span v-else-if="choice === '3'">
+        <span v-else-if="choice == 'Liste der unvollständigen Einwillungen'">
           <consent-incomplete></consent-incomplete>
         </span>
-        <span v-else-if="choice === '4'">
+        <span v-else-if="choice == 'Liste der verspätete Einwilligungen'">
           <late-consent></late-consent>
         </span>
         <span v-else>
           <consent-table></consent-table>
         </span>
+    </div>
+    <div id="verwaltung">
+        <p><button id="consent-add-btn" v-on:click="setIsClick()">Neue Eintrag zur Einwilligungsliste erstellen</button></p>
+        <div id="consent-form">
+          <span v-if="isClick == true">
+            <consent-form></consent-form>
+          </span>
+          <span v-else></span>
+        </div>
     </div>
   </section>
   </div>
@@ -36,6 +44,7 @@ import ConsentTable from './ConsentTable'
 import ConsentIncomplete from './ConsentIncomplete'
 import ConsentMissing from './ConsentMissing'
 import LateConsent from './LateConsent'
+import ConsentForm from './ConsentForm'
 
 export default {
   name: "informed-consent",
@@ -44,12 +53,19 @@ export default {
       choice: '',
 
       options: [
-        {text: "Bitte Liste auswählen", value: "null"},
-        {text: "Vollstandige Liste der Einwilligungen", value: '1'},
+        {text: "Vollstandige Liste der Einwilligungen", value: "1"},
         {text: "Liste der fehlenden Einwilligungen", value: "2"},
         {text: "Liste der unvollständigen Einwillungen", value: "3"},
         {text: "Liste der verspätete Einwilligungen", value: "4"}
-      ]
+      ],
+      
+      isClick: false
+    }
+  },
+
+  methods: {
+    setIsClick(){
+      this.isClick = true;
     }
   },
 
@@ -57,7 +73,8 @@ export default {
     ConsentTable: ConsentTable,
     ConsentIncomplete: ConsentIncomplete,
     ConsentMissing: ConsentMissing,
-    LateConsent: LateConsent
+    LateConsent: LateConsent, 
+    ConsentForm: ConsentForm
   },
 
 };
