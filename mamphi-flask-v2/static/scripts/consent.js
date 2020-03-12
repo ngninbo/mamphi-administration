@@ -4,7 +4,7 @@ consent_btn.addEventListener('click', function() {
     let body = document.getElementById("app");
 
     /*
-    TODO add function for creating and deleting consent
+    TODO add function for deleting consent
     */
 
     body.innerHTML = `<section>

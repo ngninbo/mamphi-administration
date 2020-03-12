@@ -13,13 +13,13 @@
         <span v-if="choice ==='Vollstandige Liste der Einwilligungen'">
           <consent-table></consent-table>
         </span>
-        <span v-else-if="choice == 'Liste der fehlenden Einwilligungen'">
+        <span v-else-if="choice === 'Liste der fehlenden Einwilligungen'">
           <consent-missing></consent-missing>
         </span>
-        <span v-else-if="choice == 'Liste der unvollständigen Einwillungen'">
+        <span v-else-if="choice === 'Liste der unvollständigen Einwillungen'">
           <consent-incomplete></consent-incomplete>
         </span>
-        <span v-else-if="choice == 'Liste der verspätete Einwilligungen'">
+        <span v-else-if="choice === 'Liste der verspätete Einwilligungen'">
           <late-consent></late-consent>
         </span>
         <span v-else>
@@ -53,6 +53,7 @@ export default {
       choice: '',
 
       options: [
+        {text: "", value: "Null"},
         {text: "Vollstandige Liste der Einwilligungen", value: "1"},
         {text: "Liste der fehlenden Einwilligungen", value: "2"},
         {text: "Liste der unvollständigen Einwillungen", value: "3"},

@@ -2,40 +2,49 @@
     <section>
     <div>
         <h2>Randomisierung erste Woche</h2>
-        <table>
-        <thead>
-            <tr>
-                <td>Patient_ID</td>
-                <td>Zentrum</td>
-                <td>Behandlungsarm</td>
-                <td>Datum</td>
-            </tr>
-            </thead>
-            <tbody class=rand-list>
-                <random-item class="rand-list-item" v-for="patient in list" v-bind:patient="patient" v-bind:key="patient.Patient_Id"></random-item>
-            </tbody>
-        </table>
+        <p><label id="rand-list-btn">Liste auswählen</label>
+        <select id="selection" v-model="selection">
+        <option value="Null"></option>
+        <option value="1">Vollständige Liste</option>
+        <option value="2">Wochenliche Liste Deutschland: Anzahl der Patienten pro Zentrum</option>
+        <option value="3">Wochenliche Liste Großbritanien: Anzahl der Patienten pro Zentrum</option>
+        </select>
+        </p>  
+    </div>
+    <div>
+        <span v-if="selection === '1'">
+            <random-table></random-table>
+        </span>
+        <span v-else-if="selection === '2'">
+            <weekly-list v-bind:weeklyTable="list.Germany"></weekly-list>
+        </span>
+        <span v-else-if="selection === '3'">
+            <weekly-list v-bind:weeklyTable="list.UK"></weekly-list>
+        </span>
     </div>
     </section>
 </template>
 
 
 <script>
-import RandomItem from './RandomItem'
+import RandomTable from './RandomTable'
+import WeeklyList from './WeeklyList'
 export default {
     name: 'random-week',
     data: function(){
         return{
+            selection: '',
             list: []
         };
     },
 
     components:{
-        RandomItem: RandomItem
+        RandomTable: RandomTable,
+        WeeklyList: WeeklyList
     },
 
     mounted(){
-        fetch("http://127.0.0.1:5000/mamphi/random-week1")
+        fetch("http://127.0.0.1:5000/mamphi/patient/center/week1")
         .then(response => response.json())
         .then(json => (this.list = JSON.parse(json)));
     }
