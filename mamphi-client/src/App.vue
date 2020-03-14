@@ -82,4 +82,13 @@ header>h1 {
     text-align: center;
 }
 
+.add-btn{
+    cursor: pointer;
+    background-color: aquamarine;
+}
+
+.add-btn:hover{
+    opacity: 0.8;
+}
+
 </style>

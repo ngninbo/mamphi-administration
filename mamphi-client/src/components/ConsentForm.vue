@@ -3,7 +3,7 @@
         <p><label for="zentrum">Zentrum: </label>
         <select id="zentrum" v-model="consent.Zentrum">
         <option value="Null"></option>
-        <option v-for="item in centerList" v-bind:key="item.Zentrum_Id">{{ item.Zentrum_Id }}</option>
+        <option v-for="item in center_ids" v-bind:key="item.Zentrum_Id">{{ item.Zentrum_Id }}</option>
         </select></p>
         <p><label for="informed-consent">Einwilligung erteilt?: </label>
         <select id="informed-consent" v-model="consent.Einwilligung">
@@ -13,7 +13,7 @@
         </select></p>
         <p><label for="datum">Datum: </label>
         <input id="datum" type="date" v-model="consent.Datum"/></p>
-        <p><button id="save-consent-btn" v-on:click="saveConsent()">Speichern</button>
+        <p><button class="add-btn" v-on:click="saveConsent()">Speichern</button>
         </p>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
                 Einwilligung: '',
                 Datum: ''
             },
-            centerList: [],
+            center_ids: [],
         }
     },
 
@@ -53,9 +53,9 @@ export default {
     },
 
     mounted() {
-        fetch('http://127.0.0.1:5000/mamphi/center')
+        fetch('http://127.0.0.1:5000/mamphi/center/ids')
         .then(response => response.json())
-        .then(json => (this.centerList = JSON.parse(json)))
+        .then(json => (this.center_ids = JSON.parse(json)))
     }
 }
 </script>

@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='MamphiAdministration',
+    name='mamphi-administration',
     version='0.0.2',
     packages=['mamphi-admin', 'mamphi-admin.admin', 'mamphi-admin.fetcher'],
     url='',

@@ -352,7 +352,35 @@ class MamphiDataFetcher:
 
         return json.dumps(results)
 
+    def fetch_center_ids(self):
 
-# TODO implement methods for adding and deleting center from database
-# TODO Same for consent
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        query = "SELECT Zentrum_Id FROM Zentren"
+        response = cursor.execute(query)
+        results = response.fetchall()
+
+        center_ids = [dict(idx) for idx in results]
+
+        return json.dumps(center_ids)
+
+    def remove_center_by_id(self, center_id):
+        conn = sqlite3.connect(self.mamphi_db)
+        cursor = conn.cursor()
+        statement = "DELETE FROM Zentren WHERE Zentrum_Id = {}".format(center_id)
+        cursor.execute(statement)
+        conn.commit()
+        conn.close()
+
+    def remove_consent_by_id(self, patient_id):
+        conn = sqlite3.connect(self.mamphi_db)
+        cursor = conn.cursor()
+        statement = "DELETE FROM Informed_consent WHERE Patient_Id = {}".format(patient_id)
+        cursor.execute(statement)
+        conn.commit()
+        conn.close()
+
+        print("An item have been removed")
+
 # TODO implement method for fetching monitoring plan from backend

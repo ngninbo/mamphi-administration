@@ -14,7 +14,7 @@
         <p><label for="monitor">Monitor: </label>
         <input id="monitor" type="text" name="monitor" v-model="center.Monitor"/>
         </p>
-        <p><button id="add-btn" v-on:click="saveCenter()">Anlegen</button></p>
+        <p><button class="add-btn" v-on:click="saveCenter()">Anlegen</button></p>
     </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
             // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, 
             // sobald die Antwort vollstandig vorliegt
             xhr.onload = () => {
-                alert("Ein neues Zentrum wurde erstellt!");
+                alert("Ein neuer Eintrag wurde erstellt!");
             };
         }
     }

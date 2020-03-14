@@ -81,7 +81,30 @@ def get_number_of_patient_per_center_by_week_1():
 def get_number_of_patient_per_center_by_week_2():
     return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_2())
 
-# TODO implement api for deleting center and consent via httpRequest
+
+@app.route('/mamphi/center/ids')
+@cross_origin()
+def get_center_ids():
+    return jsonify(fetcher.fetch_center_ids())
+
+
+@app.route('/mamphi/center/delete', methods=["DELETE"])
+@cross_origin()
+def delete_center():
+    center_id = request.get_json()
+    print(center_id)
+    fetcher.remove_center_by_id(center_id)
+    return "Item has been removed"
+
+
+@app.route('/mamphi/consent/delete', methods=["DELETE"])
+@cross_origin()
+def delete_consent():
+    consent_id = request.get_json()
+    print(consent_id)
+    fetcher.remove_consent_by_id(consent_id)
+    return "Item has been removed"
+
 # TODO implement api for fetching monitoring plan
 
 

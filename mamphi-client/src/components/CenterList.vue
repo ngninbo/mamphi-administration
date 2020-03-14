@@ -18,7 +18,7 @@
         </table>
     </div>
     <div>
-        <p><button id="center-add-btn" v-on:click="setIsClick()">Neues Zentrum erstellen</button></p>
+        <p><button class="add-btn" v-on:click="setIsClick()">Neues Zentrum erstellen</button></p>
         <div id="center-form">
             <span v-if="isClick == true">
                 <center-form></center-form>

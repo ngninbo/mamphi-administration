@@ -25,7 +25,9 @@ center_list.addEventListener('click', function() {
         </div>
         
         <div>
-        <p><button id="center-add-btn">Neues Zentrum erstellen</button></p>
+        <p><button id="center-add-btn">Neues Zentrum erstellen</button>
+        <button id="center-rm-btn">Eintrag löschen</button>
+        </p>
         <div id="center-form"></div>
         </div>
     </div>`

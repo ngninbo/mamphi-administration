@@ -5,7 +5,7 @@
         <p><label id="rand-list-btn">Liste auswählen</label>
         <select id="selection" v-model="selection">
         <option value="Null"></option>
-        <option value="1">Vollständige Liste</option>
+        <option value="1">Vollständige Liste: Standard</option>
         <option value="2">Wochenliche Liste Deutschland: Anzahl der Patienten pro Zentrum</option>
         <option value="3">Wochenliche Liste Großbritanien: Anzahl der Patienten pro Zentrum</option>
         </select>
@@ -20,6 +20,9 @@
         </span>
         <span v-else-if="selection === '3'">
             <weekly-list v-bind:weeklyTable="list.UK"></weekly-list>
+        </span>
+        <span v-else>
+            <random-table></random-table>
         </span>
     </div>
     </section>

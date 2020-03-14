@@ -37,10 +37,10 @@ consent_btn.addEventListener('click', function() {
 
 function consentForm() {
     let consentbtn = document.getElementById("consent-add-btn");
-    var center_table = "";
-    fetch('http://127.0.0.1:5000/mamphi/center')
+    var center_ids = "";
+    fetch('http://127.0.0.1:5000/mamphi/center/ids')
         .then(response => response.json())
-        .then(json => (center_table = JSON.parse(json)))
+        .then(json => (center_ids = JSON.parse(json)))
 
     consentbtn.addEventListener("click", function() {
         let consentForm = document.getElementById("consent-form");
@@ -63,7 +63,7 @@ function consentForm() {
 
         let zentrum = document.getElementById("zentrum");
 
-        for (let center of center_table) {
+        for (let center of center_ids) {
             let option = document.createElement("option");
             option.setAttribute("value", center.Zentrum_Id);
             option.innerHTML = center.Zentrum_Id;

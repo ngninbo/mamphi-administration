@@ -27,7 +27,7 @@
         </span>
     </div>
     <div id="verwaltung">
-        <p><button id="consent-add-btn" v-on:click="setIsClick()">Neue Eintrag zur Einwilligungsliste erstellen</button></p>
+        <p><button class="add-btn" v-on:click="setIsClick()">Neue Eintrag zur Einwilligungsliste erstellen</button></p>
         <div id="consent-form">
           <span v-if="isClick == true">
             <consent-form></consent-form>
