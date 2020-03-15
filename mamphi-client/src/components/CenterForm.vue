@@ -3,8 +3,8 @@
         <p><label for="land">Land: </label>
         <select id="land" v-model="center.Land">
         <option value="Null">Bitte Land auswählen</option>
-        <option value="1">Deutschland</option>
-        <option value="2">Großbritanien</option>
+        <option value="D">Deutschland</option>
+        <option value="GB">Großbritanien</option>
         </select></p>
         <p><label for="ort">Ort: </label>
         <input id="ort" type="text" name="ort" v-model="center.Ort"/></p>

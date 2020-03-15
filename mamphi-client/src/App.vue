@@ -91,4 +91,8 @@ header>h1 {
     opacity: 0.8;
 }
 
+#verwaltung {
+    margin-top: 5%;
+}
+
 </style>

@@ -1,61 +1,48 @@
 <template>
 <section>
+    <h2>Liste der Zentren</h2>
     <div>
-        <h2>Liste der Zentren</h2>
-        <table>
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Land</td>
-                <td>Ort</td>
-                <td>Pr&#xFC;fer</td>
-                <td>Monitor</td>
-            </tr>
-            </thead>
-            <tbody id=center-list>
-                <center-card class="center-list-item" v-for="center in list" v-bind:center="center" v-bind:key="center.center_Id"></center-card>
-            </tbody>
-        </table>
+        <p>
+        <label>Liste Verwaltung: </label>
+        <select class="center-admin" name="center-admin" v-model="choice">
+            <option value="Null"></option>
+            <option value="1">Neues Zentrum erstellen</option>
+            <option value="2">Zentrum löschen</option>
+            <option value="3">Vollständige Liste anzeigen</option>
+        </select>
+        </p>
     </div>
-    <div>
-        <p><button class="add-btn" v-on:click="setIsClick()">Neues Zentrum erstellen</button></p>
-        <div id="center-form">
-            <span v-if="isClick == true">
-                <center-form></center-form>
-            </span>
-            <span v-else></span> 
+    <div id="center-form">
+        <span v-if="choice == '1'">
+            <center-form></center-form>
+        </span>
+        <span v-else-if="choice == '2'">
+            <center-delete></center-delete>
+        </span>
+        <span v-else-if="choice == '3'">
+            <center-table></center-table>
+        </span>
         </div>
-    </div>
+    
 </section>
 </template>
 
 <script>
-import CenterCard from './CenterCard'
 import CenterForm from './CenterForm'
+import CenterTable from './CenterTable'
+import CenterDelete from './CenterDelete'
 
 export default {
     name: 'center-list',
     data: function(){
         return {
-            list: [],
-            isClick: false
+            choice: ""
         };
     },
     components: {
-        CenterCard: CenterCard,
-        CenterForm: CenterForm
-    },
-
-    methods: {
-        setIsClick() {
-            this.isClick = true;
-        }
-    },
-
-    mounted(){
-        fetch("http://127.0.0.1:5000/mamphi/center")
-        .then(response => response.json())
-        .then(json => (this.list = JSON.parse(json)));
+        CenterForm: CenterForm,
+        CenterTable: CenterTable,
+        CenterDelete: CenterDelete
     }
 }
 </script>
