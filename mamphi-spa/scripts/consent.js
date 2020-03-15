@@ -1,11 +1,14 @@
 let consent_btn = document.getElementById("consent-list-btn");
 
+var consent_list = "";
+
+var center_ids = "";
+fetch('http://127.0.0.1:5000/mamphi/center/ids')
+    .then(response => response.json())
+    .then(json => (center_ids = JSON.parse(json)))
+
 consent_btn.addEventListener('click', function() {
     let body = document.getElementById("app");
-
-    /*
-    TODO add function for deleting consent
-    */
 
     body.innerHTML = `<section>
     <div>
@@ -21,7 +24,14 @@ consent_btn.addEventListener('click', function() {
         </p>
         <div id="consent-table"></div>
         <div id="verwaltung">
-        <p><button id="consent-add-btn">Neue Eintrag zur Einwilligungsliste erstellen</button></p>
+        <p></p>
+        <label>Liste der Patienteneinwilligungen verwalten: </label>
+        <select id="choice">
+        <option value="Null"></option>
+        <option value="1">Neue Einwilligung anlegen</option>
+        <option value="2">Patienteneiwilligung löschen</option>
+        </select><button id="action-btn">Ausführen</button>
+        </select>
         <div id="consent-form"></div>
         </div>
     </div>`;
@@ -32,20 +42,67 @@ consent_btn.addEventListener('click', function() {
         displayConsents();
     });
 
-    consentForm();
+    let action = document.getElementById("action-btn");
+
+    action.addEventListener('click', function() {
+        let choice = document.getElementById("choice").value;
+
+        switch (choice) {
+            case "1":
+                consentForm();
+                break;
+            case "2":
+                deleteConsent();
+        }
+    });
 });
 
+function deleteConsent() {
+
+    let center_form = document.getElementById("consent-form");
+
+    center_form.innerHTML = `<p>Bitte wählen Sie die Einwilligung (ID) aus, welche Sie löschen wollen.</p>
+    <p><label for="consent-to-delete">Patient_ID: </label>
+    <select id="consent-to-delete">
+    <option value="Null"></option>
+    </select><button id="del-btn">Löschen</button>
+    </p>`
+
+    let consent = document.getElementById("consent-to-delete");
+
+    for (let patient of consent_list) {
+        let option = document.createElement("option");
+        option.setAttribute("value", patient.Patient_Id);
+        option.innerHTML = patient.Patient_Id;
+
+        consent.append(option);
+    }
+
+    let delation = document.getElementById("del-btn");
+
+    delation.addEventListener('click', function() {
+        let patient_id = document.getElementById("consent-to-delete").value;
+        alert("Sie sind gerade dabei die Patienteneinwilligung mit der ID = " + patient_id + " zu löschen!")
+        deleteConsentItem(patient_id);
+    });
+};
+
+function deleteConsentItem(patient_id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("Delete", "http://127.0.0.1:5000/mamphi/consent/delete");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.responseType = "json";
+    xhr.send(patient_id);
+    xhr.onload = () => {
+        alert("Patienteneinwilligung wurde gelöschen!");
+    };
+};
+
 function consentForm() {
-    let consentbtn = document.getElementById("consent-add-btn");
-    var center_ids = "";
-    fetch('http://127.0.0.1:5000/mamphi/center/ids')
-        .then(response => response.json())
-        .then(json => (center_ids = JSON.parse(json)))
 
-    consentbtn.addEventListener("click", function() {
-        let consentForm = document.getElementById("consent-form");
+    let consentForm = document.getElementById("consent-form");
 
-        consentForm.innerHTML = `<p><label for="zentrum">Zentrum: </label>
+    consentForm.innerHTML = `<p><label for="zentrum">Zentrum: </label>
                                 <select id="zentrum">
                                 <option value="Null"><option>
                                 </select></p>
@@ -61,27 +118,26 @@ function consentForm() {
                                 <button id="save-consent-btn">Speichern</button>
                                 </p>`;
 
-        let zentrum = document.getElementById("zentrum");
+    let zentrum = document.getElementById("zentrum");
 
-        for (let center of center_ids) {
-            let option = document.createElement("option");
-            option.setAttribute("value", center.Zentrum_Id);
-            option.innerHTML = center.Zentrum_Id;
+    for (let center of center_ids) {
+        let option = document.createElement("option");
+        option.setAttribute("value", center.Zentrum_Id);
+        option.innerHTML = center.Zentrum_Id;
 
-            zentrum.append(option);
-        }
+        zentrum.append(option);
+    }
 
-        let consent_addbtn = document.getElementById("save-consent-btn");
+    let consent_addbtn = document.getElementById("save-consent-btn");
 
-        consent_addbtn.addEventListener('click', function() {
-            var informed_consent = {
-                Zentrum: parseInt(document.getElementById("zentrum").value),
-                Einwilligung: document.getElementById("informed-consent").value,
-                Datum: document.getElementById("datum").value
-            };
-            console.log(informed_consent);
-            uploadConsentTable(informed_consent);
-        });
+    consent_addbtn.addEventListener('click', function() {
+        var informed_consent = {
+            Zentrum: parseInt(document.getElementById("zentrum").value),
+            Einwilligung: document.getElementById("informed-consent").value,
+            Datum: document.getElementById("datum").value
+        };
+        console.log(informed_consent);
+        uploadConsentTable(informed_consent);
     });
 };
 
@@ -98,7 +154,7 @@ function uploadConsentTable(consent) {
     // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, 
     // sobald die Antwort vollstandig vorliegt
     xhr.onload = () => {
-        alert("Ein neues Zentrum wurde erstellt!");
+        alert("Neue Patienteneinwilligung wurde erstellt!");
     };
 };
 
@@ -189,8 +245,8 @@ function displayConsents() {
             // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, sobald die Antwort vollstandig vorliegt
             xhr3.onload = () => {
                 var body = document.getElementById("consent-list");
-
-                for (let patient of JSON.parse(xhr3.response)) {
+                consent_list = JSON.parse(xhr3.response);
+                for (let patient of consent_list) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
