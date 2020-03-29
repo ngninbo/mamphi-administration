@@ -5,21 +5,22 @@
     <div>
       <p><label>Bitte eine Liste auswählen: </label>
       <select name="consentChoice" v-model="choosenTable" class="consent-mgmnt">
-        <option v-for="element in options" v-bind:key="element.value">{{ element.text }}</option>
+        <option value="Null">-- Bitte auswählen --</option>
+        <option v-for="element in options" v-bind:key="element.value" v-bind:value="element.value">{{ element.text }}</option>
       </select>
       </p>
     </div>
     <div id="consent-table">
-        <span v-if="choosenTable ==='Vollstandige Liste der Einwilligungen'">
+        <span v-if="choosenTable == '1'">
           <consent-table></consent-table>
         </span>
-        <span v-else-if="choosenTable === 'Liste der fehlenden Einwilligungen'">
+        <span v-else-if="choosenTable == '2'">
           <consent-missing></consent-missing>
         </span>
-        <span v-else-if="choosenTable === 'Liste der unvollständigen Einwillungen'">
+        <span v-else-if="choosenTable == '3'">
           <consent-incomplete></consent-incomplete>
         </span>
-        <span v-else-if="choosenTable === 'Liste der verspätete Einwilligungen'">
+        <span v-else-if="choosenTable == '4'">
           <late-consent></late-consent>
         </span>
         <span v-else>
@@ -29,7 +30,7 @@
       <div>
         <label>Eintrag löschen/anlegen: </label>
         <select v-model="actionChoosen">
-          <option value="Null"></option>
+          <option value="default">-- Bitte auswählen --</option>
           <option value="1">Neue Patienteneinwilligung anlegen</option>
           <option value="2">Patienteneinwilligung löschen</option>
         </select>
@@ -59,10 +60,9 @@ export default {
   name: "informed-consent",
   data: function(){
     return{
-      choosenTable: '',
-      actionChoosen: '',
+      choosenTable: "Null",
+      actionChoosen: 'default',
       options: [
-        {text: "", value: "Null"},
         {text: "Vollstandige Liste der Einwilligungen", value: "1"},
         {text: "Liste der fehlenden Einwilligungen", value: "2"},
         {text: "Liste der unvollständigen Einwillungen", value: "3"},

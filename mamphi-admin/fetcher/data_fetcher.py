@@ -381,6 +381,6 @@ class MamphiDataFetcher:
         conn.commit()
         conn.close()
 
-        print("An item have been removed")
+        print("An item has been removed")
 
 # TODO implement method for fetching monitoring plan from backend

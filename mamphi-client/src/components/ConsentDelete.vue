@@ -3,7 +3,7 @@
         <p>Bitte wählen Sie die Einwilligung (ID) aus, welche Sie löschen wollen.</p>
         <p><label for="consent-to-delete">Patient_ID: </label>
         <select id="consent-to-delete" v-model="patient_id">
-            <option value="Null"></option>
+            <option value="Null">-- Bitte auswählen --</option>
             <option v-for="consent in consent_list" v-bind:key="consent.Patient_Id">{{ consent.Patient_Id }}</option>
         </select>
         <button id="del-btn" v-on:click="deleteConsent()">Löschen</button>
@@ -18,7 +18,7 @@ export default {
     data: function(){
         return {
             consent_list: [],
-            patient_id: ''
+            patient_id: 'Null'
         }
     },
 

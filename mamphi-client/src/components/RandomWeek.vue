@@ -4,7 +4,7 @@
         <h2>Randomisierung erste Woche</h2>
         <p><label id="rand-list-btn">Liste auswählen</label>
         <select id="selection" v-model="selection">
-        <option value="Null"></option>
+        <option value="Null">-- Bitte auswählen --</option>
         <option value="1">Vollständige Liste: Standard</option>
         <option value="2">Wochenliche Liste Deutschland: Anzahl der Patienten pro Zentrum</option>
         <option value="3">Wochenliche Liste Großbritanien: Anzahl der Patienten pro Zentrum</option>
@@ -36,7 +36,7 @@ export default {
     name: 'random-week',
     data: function(){
         return{
-            selection: '',
+            selection: 'Null',
             list: []
         };
     },

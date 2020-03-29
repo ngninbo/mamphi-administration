@@ -5,7 +5,7 @@
         <p>
         <label>Liste Verwaltung: </label>
         <select class="center-admin" name="center-admin" v-model="choice">
-            <option value="Null"></option>
+            <option value="Null">-- Bitte auswählen --</option>
             <option value="1">Neues Zentrum erstellen</option>
             <option value="2">Zentrum löschen</option>
             <option value="3">Vollständige Liste anzeigen</option>
@@ -36,7 +36,7 @@ export default {
     name: 'center-list',
     data: function(){
         return {
-            choice: ""
+            choice: "Null"
         };
     },
     components: {

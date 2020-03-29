@@ -2,7 +2,7 @@
     <div>
         <p><label for="zentrum">Zentrum: </label>
         <select id="zentrum" v-model="consent.Zentrum">
-        <option value="Null"></option>
+        <option value="Null">-- Bitte auswählen --</option>
         <option v-for="item in center_ids" v-bind:key="item.Zentrum_Id">{{ item.Zentrum_Id }}</option>
         </select></p>
         <p><label for="informed-consent">Einwilligung erteilt?: </label>
@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             consent: {
-                Zentrum: '',
+                Zentrum: 'Null',
                 Einwilligung: '',
                 Datum: ''
             },

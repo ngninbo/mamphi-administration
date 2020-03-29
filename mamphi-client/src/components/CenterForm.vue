@@ -2,7 +2,7 @@
     <div>
         <p><label for="land">Land: </label>
         <select id="land" v-model="center.Land">
-        <option value="Null">Bitte Land auswählen</option>
+        <option value="Null">-- Bitte Land auswählen --</option>
         <option value="D">Deutschland</option>
         <option value="GB">Großbritanien</option>
         </select></p>
@@ -24,11 +24,11 @@ export default {
     data: function(){
         return{
             center: {
-                Land: '',
+                Land: "Null",
                 Ort: '',
                 Pruefer: '',
                 Monitor: ''
-            }
+            },
         }
     },
 
