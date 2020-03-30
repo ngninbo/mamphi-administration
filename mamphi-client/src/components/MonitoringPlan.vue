@@ -18,8 +18,8 @@
                 <tbody id=monitoring-plan>
                     <tr v-for="item in list" v-bind:key="item.Zentrum_Id">
                         <td>{{ item.Zentrum_Id }}</td>
+                        <td>{{ item.Land === "D" ? "Deutschland": "Großbritanien" }}</td>
                         <td>{{ item.Ort }}</td>
-                        <td>{{ item.Land }}</td>
                         <td>{{ item.Pruefer }}</td>
                         <td>{{ item.Monitor }}</td>
                         <td>{{ item.NP }}</td>

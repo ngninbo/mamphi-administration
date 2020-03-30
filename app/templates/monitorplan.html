@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block title %}
+Mamphi-Studie Verwaltung
+{% endblock %}
+{% block content %}
+<main>
+    <section>
+        <div>
+            <h2>Monitoring-Plan</h2>
+            <div>
+                <p>Nachfolgend ist die Planung, wann welcher Monitor welches Zentrum besuchen soll</p>
+            <table>
+                <thead>
+                <tr>
+                    <td>Zentrum</td>
+                    <td>Land</td>
+                    <td>Ort</td>
+                    <td>Pr&#xFC;fer</td>
+                    <td>Monitor</td>
+                    <td>Anzahl Patienten</td>
+                    <td colspan="5">Monitorbesuche</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in monitoringplan %}
+                <tr>
+                    <td>{{ item['Zentrum_Id'] }}</td>
+                    <td>{{ "Deutschland" if item['Land'] == "D" else "Großbritanien" }}</td>
+                    <td>{{ item['Ort'] }}</td>
+                    <td>{{ item['Pruefer'] }}</td>
+                    <td>{{ item['Monitor'] }}</td>
+                    <td>{{ item['NP'] }}</td>
+                    {% for date in item['Monitor_Visite']%}
+                    <td>{{ date }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

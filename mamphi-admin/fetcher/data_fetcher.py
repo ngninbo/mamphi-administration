@@ -407,7 +407,7 @@ class MamphiDataFetcher:
         data = json.loads(centres)
 
         for item in data:
-            if 1 <= item['NP'] < 5:
+            if 0 < item['NP'] < 5:
                 visites = pd.date_range(start='6/1/2019', periods=5, freq='3M')
                 item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
             elif 4 < item['NP'] < 10:

@@ -60,5 +60,12 @@ def random_w_2():
     return render_template("random_w_2.html", results=results)
 
 
+@app.route("/mamphi/monitor/planing")
+def monitoring():
+    results = json.loads(fetcher.retrieve_monitoring_plan())
+
+    return render_template("monitorplan.html", monitoringplan=results)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
