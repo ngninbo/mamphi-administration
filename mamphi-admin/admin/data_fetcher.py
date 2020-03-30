@@ -438,3 +438,39 @@ class MamphiDataFetcher:
         conn.close()
 
         print("An item have been removed")
+
+    def retrieve_centres_with_number_of_patient(self):
+        week1 = self.get_number_of_patient_per_center_by_week_1()
+        week2 = self.get_number_of_patient_per_center_by_week_2()
+
+        week1_df = pd.read_json(week1)
+        week2_df = pd.read_json(week2)
+
+        sum_weekly_records = pd.concat([week1_df, week2_df], ignore_index=True)
+        records = sum_weekly_records.groupby(['Zentrum']).sum()
+
+        centres = self.fetch_center()
+        centres = pd.read_json(centres)
+        centres['NP'] = 0
+
+        for idx in records.index:
+            centres.loc[centres['Zentrum_Id'] == idx, 'NP'] = records['Number_Of_Patient'][idx]
+
+        return centres.to_json(orient='records')
+
+    def retrieve_monitoring_plan(self):
+        centres = self.retrieve_centres_with_number_of_patient()
+        data = json.loads(centres)
+
+        for item in data:
+            if 1 <= item['NP'] < 5:
+                visites = pd.date_range(start='6/1/2019', periods=5, freq='3M')
+                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+            elif 4 < item['NP'] < 10:
+                visites = pd.date_range(start='6/1/2019', periods=5, freq='2M')
+                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+            elif item['NP'] >= 10:
+                visites = pd.date_range(start='6/1/2019', periods=5, freq='M')
+                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+
+        return json.dumps(data)

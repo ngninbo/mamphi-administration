@@ -9,6 +9,7 @@ body {
 table {
     font-family: sans-serif;
     border-collapse: collapse;
+    text-align: center;
 }
 
 td,

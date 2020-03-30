@@ -105,7 +105,11 @@ def delete_consent():
     fetcher.remove_consent_by_id(consent_id)
     return "Item has been removed"
 
-# TODO implement api for fetching monitoring plan
+
+@app.route('/mamphi/monitor/planing')
+@cross_origin()
+def monitor_plan():
+    return jsonify(fetcher.retrieve_monitoring_plan())
 
 
 if __name__ == '__main__':

@@ -41,6 +41,7 @@ td,
 tr {
     border: 2px solid #dddddd;
     padding: 8px;
+    text-align: center;
 }
 
 tr:nth-child(even) {

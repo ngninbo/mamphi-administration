@@ -8,6 +8,7 @@ import InformedConsent from './components/InformedConsent.vue'
 import CenterList from './components/CenterList.vue'
 import RandomWeek from './components/RandomWeek.vue'
 import RandomWeek2 from './components/RandomWeek2.vue'
+import MonitoringPlan from './components/MonitoringPlan.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
@@ -19,6 +20,7 @@ const router = new VueRouter({
         { path: '/consent', component: InformedConsent },
         { path: '/firstrandomization', component: RandomWeek },
         { path: '/secondrandomization', component: RandomWeek2 },
+        { path: '/monitorplan', component: MonitoringPlan },
         { path: '*', redirect: '/description' },
     ]
 });
