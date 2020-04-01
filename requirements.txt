@@ -1,3 +1,5 @@
+werkzeug
+wtforms
 numpy
 fetcher
 pandas
