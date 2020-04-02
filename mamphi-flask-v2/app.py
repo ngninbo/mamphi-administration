@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, Response, request, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 
 db = SQLAlchemy()
@@ -53,7 +53,7 @@ def login_post():
 
         return redirect(url_for('login'))
 
-    elif user != None and  not check_password_hash(user.password, password=password):
+    elif user is not None and not check_password_hash(user.password, password=password):
         flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('login'))

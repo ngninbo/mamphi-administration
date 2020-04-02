@@ -7,7 +7,7 @@
 </head>
 <body style="margin-bottom: 1%">
 <header>
-    <h1>Willkommen auf der Webanwendung zur Mamphi-Studie Verwaltung!</h1>
+    <h1>Hallo {{name.upper()}}. Willkommen auf der Webanwendung zur Mamphi-Studie Verwaltung!</h1>
     <div>
         <div class="navbar">
             <a href="{{ url_for('description') }}" class="navbar-brand">Beschreibung</a>
@@ -16,7 +16,7 @@
             <a href="{{ url_for('random_w_1') }}" class="navbar-item">Randomisierungswoche 1</a>
             <a href="{{ url_for('random_w_2') }}" class="navbar-item">Randomisierungswoche 2</a>
             <a href="{{ url_for('monitoring') }}" class="navbar-item">Monitoringsplan</a>
-
+            <a href="{{ url_for('logout') }}" class="navbar-item">Auslogen</a>
         </div>
     </div>
 </header>
