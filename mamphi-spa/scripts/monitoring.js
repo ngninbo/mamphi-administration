@@ -44,11 +44,11 @@ monitoring.addEventListener('click', function() {
         <td>${ center.Pruefer }</td>
         <td>${ center.Monitor }</td>
         <td>${ center.NP}</td>
-        <td>${ visites[0] != undefined ? visites[0] : "Kein Termin Vorhanden" }</td>
-        <td>${ visites[1] != undefined ? visites[1] : "Kein Termin Vorhanden" }</td>
-        <td>${ visites[2] != undefined ? visites[2] : "Kein Termin Vorhanden" }</td>
-        <td>${ visites[3] != undefined ? visites[3] : "Kein Termin Vorhanden" }</td>
-        <td>${ visites[4] != undefined ? visites[4] : "Kein Termin Vorhanden" }</td>`
+        <td>${ visites[0] }</td>
+        <td>${ visites[1] }</td>
+        <td>${ visites[2] }</td>
+        <td>${ visites[3] }</td>
+        <td>${ visites[4] }</td>`
 
         plan.appendChild(row);
 

@@ -13,11 +13,11 @@ zentren.addEventListener('click', function() {
         <div>
         <p><label>Liste Verwaltung: </label>
         <select id="selection">
-        <option value="Null"></option>
+        <option value="Null">--> Bitte Aktion auswählen <-- </option>
         <option value="1">Neues Zentrum anlegen</option>
         <option value="2">Zentrum löschen</option>
         <option value="3">Liste aller Zentren anzeigen</option>
-        </select><button id="action-btn">Ausführen</button>
+        </select><button id="action-btn">AusfühSren</button>
         </p>
         </div>
         <div id="center-admin"></div>
@@ -108,7 +108,7 @@ function centerForm() {
 
     center_form.innerHTML = `<p><label for="land">Land: </label>
                                 <select id="land">
-                                <option value="Null">Bitte Land auswählen</option>
+                                <option value="Null"> --> Bitte Land auswählen <-- </option>
                                 <option value="1">Deutschland</option>
                                 <option value="2">Großbritanien</option>
                                 </select></p>

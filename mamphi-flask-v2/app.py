@@ -1,17 +1,16 @@
 from flask import Flask, render_template, redirect, Response, request, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 db = SQLAlchemy()
 app = Flask(__name__)
 # config
-app.config.update(DEBUG=True, SECRET_KEY='secret_xxx')
+app.config.update(SECRET_KEY='secret_xxx')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 db.init_app(app)
-
 
 # flask-login
 login_manager = LoginManager()
@@ -28,16 +27,8 @@ class User(UserMixin, db.Model):
 
 @login_manager.user_loader
 def user_loader(user_id):
-    # if user_id not in users:
-    # return
 
-    # user = User()
-
-    # user.id = user_id
     return User.query.get(user_id)
-
-# Our mock database.
-# users = {'foo@bar.tld': {'password': 'secret'}}
 
 
 @app.route("/")
@@ -57,10 +48,12 @@ def login_post():
 
     user = User.query.filter_by(email=email).first()
 
-    print("password", password)
-    print("email", email)
-    print(user.password)
-    if not user and not check_password_hash(user.password, password):
+    if user is None:
+        flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
+
+        return redirect(url_for('login'))
+
+    elif user != None and  not check_password_hash(user.password, password=password):
         flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('login'))
@@ -91,7 +84,7 @@ def page_not_found():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return 'Unauthorized'
+    return '<p>Unauthorized</p>'
 
 
 if __name__ == '__main__':

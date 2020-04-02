@@ -9,7 +9,14 @@
 
 <body>
     <main>
-        <form action="#" method="POST">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST">
             <fieldset>
                 <legend>Anmeldung:</legend>
                 <p>
