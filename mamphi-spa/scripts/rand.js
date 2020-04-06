@@ -1,11 +1,12 @@
-var data = "";
-fetch('http://127.0.0.1:5000/mamphi/patient/center/week1')
-    .then(response => response.json())
-    .then(json => (data = JSON.parse(json)))
-
 let rand_w1_list = document.querySelector("#rand-w1-btn");
 
+var data_week1 = "";
+fetch('http://127.0.0.1:5000/mamphi/patient/center/week1')
+    .then(response => response.json())
+    .then(json => (data_week1 = JSON.parse(json)))
+
 rand_w1_list.addEventListener('click', function() {
+
     let body = document.getElementById("app");
 
     body.innerHTML = `<section>
@@ -99,7 +100,7 @@ function displayTable() {
         case "2":
             weeklyList();
             let body = document.getElementById("weekly-list-table");
-            for (let center of data["Germany"]) {
+            for (let center of data_week1["Germany"]) {
                 let prop = document.createElement("tr");
 
                 prop.innerHTML = `<td>${center.Zentrum}</td>
@@ -112,7 +113,7 @@ function displayTable() {
         case "3":
             weeklyList();
             let content = document.getElementById("weekly-list-table");
-            for (let center of data["UK"]) {
+            for (let center of data_week1["UK"]) {
                 let prop = document.createElement("tr");
 
                 prop.innerHTML = `<td>${center.Zentrum}</td>

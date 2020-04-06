@@ -12,6 +12,7 @@ def create_app():
     # config
     app.config.update(SECRET_KEY='secret_xxx')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     db.init_app(app)
 

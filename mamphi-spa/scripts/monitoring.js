@@ -1,11 +1,12 @@
 let monitoring = document.getElementById("monitoring-btn");
 
-var data = "";
+var planing = "";
 fetch('http://127.0.0.1:5000/mamphi/monitor/planing')
     .then(response => response.json())
-    .then(json => (data = JSON.parse(json)))
+    .then(json => (planing = JSON.parse(json)))
 
 monitoring.addEventListener('click', function() {
+
     let body = document.getElementById("app");
 
     body.innerHTML = `<h2>Monitoring-Plan</h2>
@@ -29,7 +30,7 @@ monitoring.addEventListener('click', function() {
 
     let plan = document.getElementById('monitoring-plan');
 
-    for (let center of data) {
+    for (let center of planing) {
         let row = document.createElement("tr");
 
         var visites = [];
@@ -44,11 +45,11 @@ monitoring.addEventListener('click', function() {
         <td>${ center.Pruefer }</td>
         <td>${ center.Monitor }</td>
         <td>${ center.NP}</td>
-        <td>${ visites[0] }</td>
-        <td>${ visites[1] }</td>
-        <td>${ visites[2] }</td>
-        <td>${ visites[3] }</td>
-        <td>${ visites[4] }</td>`
+        <td>${ visites[0] !=undefined ? visites[0] : "Kein Termin" }</td>
+        <td>${ visites[1] !=undefined ? visites[1] : "Kein Termin" }</td>
+        <td>${ visites[2] !=undefined ? visites[2] : "Kein Termin" }</td>
+        <td>${ visites[3] !=undefined ? visites[3] : "Kein Termin" }</td>
+        <td>${ visites[4] !=undefined ? visites[4] : "Kein Termin" }</td>`
 
         plan.appendChild(row);
 
