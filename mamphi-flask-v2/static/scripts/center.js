@@ -37,6 +37,10 @@ zentren.addEventListener('click', function() {
                 break;
             case "3":
                 showCenterList();
+                break;
+            default:
+                showCenterList();
+                break;
         }
     });
 
@@ -48,11 +52,11 @@ function showCenterList() {
     center_form.innerHTML = `<table>
     <thead>
         <tr>
-            <td>ID</td>
-            <td>Land</td>
-            <td>Ort</td>
-            <td>Pr&#xFC;fer</td>
-            <td>Monitor</td>
+            <th>ID</th>
+            <th>Land</th>
+            <th>Ort</th>
+            <th>Pr&#xFC;fer</th>
+            <th>Monitor</th>
         </tr>
         </thead>
         <tbody id=center-list>

@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Mamphi-Studie Verwaltung</title>
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body style="margin-bottom: 1%">
 <header>
-    <h1>Hallo {{name.upper()}}. Willkommen auf der Webanwendung zur Mamphi-Studie Verwaltung!</h1>
+    <h1>Hallo {{name.upper()}}</h1>
     <div>
         <div class="navbar">
             <a href="{{ url_for('description') }}" class="navbar-brand">Beschreibung</a>

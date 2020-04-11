@@ -3,35 +3,33 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Mamphi-Studie Verwaltung</title>
+    <title>Mamphi - Studie Verwaltung</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="static/stylesheets/style.css">
 </head>
 
 <body>
-    <main>
+<main>
+
+    <div class="login">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="notification is-danger">
-                {{ messages[0] }}
-            </div>
+        <div class="notification-is-danger">
+            {{ messages[0] }}
+        </div>
         {% endif %}
         {% endwith %}
-        <form method="POST">
-            <fieldset>
-                <legend>Anmeldung:</legend>
-                <p>
-                    <label for="useremail"> E-Mail: </label> <input id="useremail" type="email" name="useremail" required placeholder="E-Mail eingeben" autofocus="">
-                </p>
+        <div class="login-triangle"></div>
 
-                <p>
-                    <label for="password">Passwort:</label> <input id="password" type="password" name="password" required placeholder="Passwort eingeben">
-                </p>
-            </fieldset>
-            <p>
-                <input id="submit" type="submit" value="Anmelden"> <input id="reset" type="reset">
-            </p>
+        <h2 class="login-header">Bitte melden Sie sich an</h2>
+
+        <form class="login-container" method="post">
+            <p><input type="email" name="username" placeholder="Email" required></p>
+            <p><input type="password" name="password" placeholder="Password" required></p>
+            <p><input type="submit" value="Anmelden"></p>
         </form>
-    </main>
+    </div>
+</main>
 </body>
 
 </html>

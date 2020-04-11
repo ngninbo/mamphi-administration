@@ -1,19 +1,28 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+import os
+import sys
 
 
 db = SQLAlchemy()
+DATABASE = 'sqlite:///database.db'
 
 
 def create_app():
 
-    app = Flask(__name__)
+    if getattr(sys, 'frozen', False):
+        template_folder = os.path.join(sys._MEIPASS, 'templates')
+        static_folder = os.path.join(sys._MEIPASS, 'static')
+
+        app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+    else:
+        app = Flask(__name__)
+
     # config
     app.config.update(SECRET_KEY='secret_xxx')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
     db.init_app(app)
 
     # flask-login

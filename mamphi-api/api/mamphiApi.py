@@ -1,13 +1,18 @@
+# -- coding: utf-8 --
 from flask import Flask, jsonify, request
 from fetcher.data_fetcher import MamphiDataFetcher
 from flask_cors import CORS, cross_origin
 import json
+import os
+
+
+DATABASE = os.getcwd() + "/data/mamphi.db"
+fetcher = MamphiDataFetcher(mamphi_db=DATABASE)
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-
-fetcher = MamphiDataFetcher('../../data/mamphi.db')
+app.config['DATABASE'] = DATABASE
 
 
 @app.route('/mamphi/consents')

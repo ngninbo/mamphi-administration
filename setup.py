@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='mamphi-administration',
     version='0.0.2',
-    packages=['mamphi-admin', 'mamphi-admin.admin', 'mamphi-admin.fetcher'],
+    packages=find_packages(),
     url='',
     license='Apache License',
     author='Beauclair Dongmo Ngnintedem',

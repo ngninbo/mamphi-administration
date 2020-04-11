@@ -163,10 +163,10 @@ function makeTable() {
 
     consent_table.innerHTML = `<table><thead>
         <tr>
-            <td>Patienten_ID</td>
-            <td>Zentrum</td>
-            <td>Einwillung erteilt</td>
-            <td>Datum der Einwilligung</td>
+            <th>Patienten_ID</th>
+            <th>Zentrum</th>
+            <th>Einwillung erteilt</th>
+            <th>Datum der Einwilligung</th>
         </tr></thead>
         <tbody id="consent-list"></tbody></table>`;
 };
@@ -195,7 +195,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung.toUpperCase()}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -223,7 +223,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${ patient.Einwilligung}</td>
+                                <td>${ patient.Einwilligung.toUpperCase() }</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -251,7 +251,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung.toUpperCase }</td>
                                 <td>${patient.Datum === "NaT" ? "": patient.Datum}</td>`;
 
                     body.appendChild(prop);

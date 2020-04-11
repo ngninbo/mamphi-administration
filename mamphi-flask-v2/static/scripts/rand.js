@@ -38,10 +38,10 @@ function createRandTable() {
     rand_table.innerHTML = `<table>
     <thead>
         <tr>
-            <td>Patient_ID</td>
-            <td>Zentrum</td>
-            <td>Behandlungsarm</td>
-            <td>Datum</td>
+            <th>Patient_ID</th>
+            <th>Zentrum</th>
+            <th>Behandlungsarm</th>
+            <th>Datum</th>
         </tr>
         </thead>
         <tbody id="rand-list">

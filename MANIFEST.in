@@ -1,0 +1,2 @@
+recursive-include mamphi-flask-v2/templates *
+recursive-include mamphi-flask-v2/static *

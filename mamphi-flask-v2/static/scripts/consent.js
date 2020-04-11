@@ -25,9 +25,9 @@ consent_btn.addEventListener('click', function() {
         <div id="consent-table"></div>
         <div id="verwaltung">
         <p></p>
-        <label>Liste der Patienteneinwilligungen verwalten: </label>
+        <label>Patienteneinwilligung anlegen/löschen?: </label>
         <select id="choice">
-        <option value="Null"></option>
+        <option value="Null">-- Bitte auswählen --</option>
         <option value="1">Neue Einwilligung anlegen</option>
         <option value="2">Patienteneiwilligung löschen</option>
         </select><button id="action-btn">Ausführen</button>
@@ -53,6 +53,7 @@ consent_btn.addEventListener('click', function() {
                 break;
             case "2":
                 deleteConsent();
+                break;
         }
     });
 });
@@ -163,10 +164,10 @@ function makeTable() {
 
     consent_table.innerHTML = `<table><thead>
         <tr>
-            <td>Patienten_ID</td>
-            <td>Zentrum</td>
-            <td>Einwillung erteilt</td>
-            <td>Datum der Einwilligung</td>
+            <th>Patienten_ID</th>
+            <th>Zentrum</th>
+            <th>Einwillung erteilt</th>
+            <th>Datum der Einwilligung</th>
         </tr></thead>
         <tbody id="consent-list"></tbody></table>`;
 };
@@ -195,7 +196,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung.toUpperCase()}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -223,7 +224,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${ patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung.toUpperCase()}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -251,7 +252,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung}</td>
+                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung.toUpperCase()}</td>
                                 <td>${patient.Datum === "NaT" ? "": patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -279,7 +280,7 @@ function displayConsents() {
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                     <td>${patient.Zentrum}</td>
-                                    <td>${patient.Einwilligung}</td>
+                                    <td>${patient.Einwilligung.toUpperCase()}</td>
                                     <td>${patient.Datum === "NaT" ? "": patient.Datum}</td>`;
 
                     body.appendChild(prop);

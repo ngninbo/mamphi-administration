@@ -2,23 +2,35 @@ from fetcher.data_fetcher import MamphiDataFetcher
 from flask import Flask, render_template, redirect, Response, request, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash  # generate_password_hash
 import json
+import os
+import sys
 
 # TODO Remove comments to export data from excel sheet to database if database not available
 # data = MamphiData()
 # data.export_data()
 # db = data.db_filename
 
-mamphidb = '../data/mamphi.db'  # db = "../" + data.db_filename
+DATABASE = os.getcwd() + '/data/mamphi.db'  # db = "../" + data.db_filename
+USER_DB = 'sqlite:///database.db'
 
-fetcher = MamphiDataFetcher(mamphi_db=mamphidb)
+fetcher = MamphiDataFetcher(mamphi_db=DATABASE)
 
 db = SQLAlchemy()
-app = Flask(__name__)
+
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    static_folder = os.path.join(sys._MEIPASS, 'static')
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+else:
+    app = Flask(__name__)
+
+
 # config
 app.config.update(SECRET_KEY='secret_xxx')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = USER_DB
+app.config['DATABASE'] = DATABASE
 
 db.init_app(app)
 
@@ -34,9 +46,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
 
+
 users = [{'username': "admin", 'email': "admin@mamphi.de", 'password': "nidma"},
-             {'username': "beauclair", 'email': "user001@mamphi.de", 'password': "001user"},
-             {'username': "abelard", 'email': "user002@mamphi.de", 'password': "002user"}]
+         {'username': "beauclair", 'email': "user001@mamphi.de", 'password': "001user"},
+         {'username': "abelard", 'email': "user002@mamphi.de", 'password': "002user"}]
 '''
 with app.app_context():
     for testuser in users:
@@ -66,7 +79,7 @@ def login():
 
 @app.route('/login', methods=["POST"])
 def login_post():
-    email = request.form.get('useremail')
+    email = request.form.get('username')
     password = request.form.get('password')
 
     user = User.query.filter_by(email=email).first()
@@ -143,6 +156,7 @@ def monitoring():
 
     return render_template("monitorplan.html", monitoringplan=results, name=current_user.username)
 
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -162,4 +176,13 @@ def unauthorized_handler():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    import random
+    import threading
+    import webbrowser
+
+    port = 5000 + random.randint(0, 999)
+    url = "http://127.0.0.1:{0}".format(port)
+
+    threading.Timer(1.25, lambda: webbrowser.open(url)).start()
+
+    app.run(port=port, debug=False, host='0.0.0.0')
