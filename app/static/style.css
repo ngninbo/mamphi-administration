@@ -211,5 +211,5 @@ body {
 }
 
 .notification-is-danger {
-    text-decoration: red;
+    color: red;
 }
