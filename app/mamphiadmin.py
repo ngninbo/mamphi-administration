@@ -2,7 +2,7 @@ from fetcher.data_fetcher import MamphiDataFetcher
 from flask import Flask, render_template, redirect, Response, request, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash  # generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 import json
 import os
 import sys
@@ -30,6 +30,7 @@ else:
 app.config.update(SECRET_KEY='secret_xxx')
 app.config['SQLALCHEMY_DATABASE_URI'] = USER_DB
 app.config['DATABASE'] = DATABASE
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db.init_app(app)
 
@@ -41,23 +42,20 @@ login_manager.init_app(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(80))
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(64), unique=True)
+    password_hash = db.Column(db.String(128))
 
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
 
-users = [{'username': "admin", 'email': "admin@mamphi.de", 'password': "nidma"},
-         {'username': "beauclair", 'email': "user001@mamphi.de", 'password': "001user"},
-         {'username': "abelard", 'email': "user002@mamphi.de", 'password': "002user"}]
-'''
-with app.app_context():
-    for testuser in users:
-        db.session.add(User(username=testuser['username'], email=testuser['email'],
-                            password=generate_password_hash(password=testuser['password'],method="sha256")))
-        db.session.commit()
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password, method="sha256")
 
-        print('user with name= {} has been created'.format(testuser['username']))
-'''
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 @login_manager.user_loader
@@ -87,7 +85,7 @@ def login_post():
 
         return redirect(url_for('login'))
 
-    elif user is not None and not check_password_hash(user.password, password=password):
+    elif user is not None and not user.verify_password(password=password):
         flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('login'))
