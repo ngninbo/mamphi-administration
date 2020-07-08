@@ -24,7 +24,7 @@ def login_post():
 
         return redirect(url_for('auth.login'))
 
-    elif user is not None and not check_password_hash(user.password, password=password):
+    elif user is not None and not user.verify_password(password=password):
         flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('auth.login'))
