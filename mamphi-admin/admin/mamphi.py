@@ -41,7 +41,7 @@ class Mamphi:
                 conn.commit()
                 print(cursor.rowcount, "record inserted.")
 
-            except:
+            except EOFError:
                 conn.rollback()
 
         conn.close()
@@ -82,7 +82,7 @@ class Mamphi:
                 connection.commit()
                 print(cursor.rowcount, "record inserted.")
 
-            except:
+            except EOFError:
                 # Rollback in case there is any error
                 connection.rollback()
             # if i !=len(rows)-2:
@@ -123,7 +123,7 @@ class Mamphi:
                 # Commit changes
                 conn.commit()
                 print(cursor.rowcount, "record inserted.")
-            except:
+            except EOFError:
                 conn.rollback()
             # if i != len(rows)-2:
             # values += ","
@@ -161,10 +161,8 @@ class Mamphi:
                 # Commit changes
                 conn.commit()
                 print(cursor.rowcount, "record inserted.")
-            except:
+            except EOFError:
                 conn.rollback()
-            # if i != len(rows)-2:
-            # values += ","
 
         conn.close()
 
