@@ -24,19 +24,19 @@ def get_consents():
 @app.route('/mamphi/consents/incomplete')
 @cross_origin()
 def get_incomplete_consents():
-    return jsonify(fetcher.fetch_incomplete_consent())
+    return jsonify(fetcher.fetch_consent_list(consent="inmcomplete"))
 
 
 @app.route('/mamphi/consents/missing')
 @cross_origin()
 def get_missing_consent():
-    return jsonify(fetcher.fetch_missing_consent())
+    return jsonify(fetcher.fetch_consent_list(consent="missing"))
 
 
 @app.route('/mamphi/consents/later')
 @cross_origin()
 def get_content_after_rand():
-    return jsonify(fetcher.fetch_consent_after_randomisation())
+    return jsonify(fetcher.fetch_consent_list(consent="late"))
 
 
 @app.route('/mamphi/center')
@@ -48,7 +48,7 @@ def get_center():
 @app.route('/mamphi/random-week1')
 @cross_origin()
 def get_rand_w1():
-    return jsonify(fetcher.fetch_rand_w1())
+    return jsonify(fetcher.fetch_rand_week(week=1))
 
 
 @app.route('/mamphi/center/update', methods=["POST"])
@@ -72,19 +72,19 @@ def upload_consent():
 @app.route('/mamphi/random-week2')
 @cross_origin()
 def get_ran_w2():
-    return jsonify(fetcher.fetch_rand_w2())
+    return jsonify(fetcher.fetch_rand_week(week=2))
 
 
 @app.route('/mamphi/patient/center/week1')
 @cross_origin()
 def get_number_of_patient_per_center_by_week_1():
-    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_1())
+    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week(week=1))
 
 
 @app.route('/mamphi/patient/center/week2')
 @cross_origin()
 def get_number_of_patient_per_center_by_week_2():
-    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week_2())
+    return jsonify(fetcher.get_number_patient_per_center_per_country_by_week(week=2))
 
 
 @app.route('/mamphi/center/ids')

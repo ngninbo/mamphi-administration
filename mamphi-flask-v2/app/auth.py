@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, Response, session
-from werkzeug.security import check_password_hash
 from flask_login import login_user, login_required, logout_user
 from .models import User
 
@@ -20,12 +19,12 @@ def login_post():
     user = User.query.filter_by(email=email).first()
 
     if user is None:
-        flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
+        flash("Ungültige Zugangsdaten! Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('auth.login'))
 
     elif user is not None and not user.verify_password(password=password):
-        flash("Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
+        flash("Ups! Falsches Password eingegeben. Prüfen Sie bitte Ihre Anmeldedaten und versuchen Sie erneut.")
 
         return redirect(url_for('auth.login'))
 

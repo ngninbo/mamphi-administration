@@ -11,8 +11,8 @@ def populate_data(path_to_center_sheet, path_to_consent_sheet, path_to_rand_w1_s
 
     mamphi.create_center_table()
     mamphi.create_consent_table()
-    mamphi.create_table_randomisation_week1()
-    mamphi.create_table_randomisation_week2()
+    mamphi.create_table_randomisation_week(week=1)
+    mamphi.create_table_randomisation_week(week=2)
 
 
 def main():

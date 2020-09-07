@@ -91,60 +91,19 @@ class Mamphi:
         connection.close()
         print('Successfully created database table Informed_consent')
 
-    def create_table_randomisation_week1(self):
-        """
-
-        :rtype: object
-        """
-        random_week1_data = pd.read_excel(self.path_to_rand_w1_sheet)
-
-        conn = sqlite3.connect(self.db_filename)
-        cursor = conn.cursor()
-
-        querie_create_table_rand_w1 = """CREATE TABLE IF NOT EXISTS Random_Woche_1(
-                                    Patient_Id smallint,
-                                    Zentrum smallint,
-                                    Behandlungsarm varchar(255),
-                                    Datum date
-                                  )"""
-
-        cursor.execute(querie_create_table_rand_w1)
-
-        rows = random_week1_data.values
-
-        for row in rows:
-            value = str(tuple(row))
-
-            sql = "INSERT INTO Random_Woche_1 VALUES" + value
-
-            try:
-                # Execute SQL Command
-                cursor.execute(sql)
-                # Commit changes
-                conn.commit()
-                print(cursor.rowcount, "record inserted.")
-            except EOFError:
-                conn.rollback()
-            # if i != len(rows)-2:
-            # values += ","
-
-        conn.close()
-
-        print('Successfully created database table random_Week_1')
-
-    def create_table_randomisation_week2(self):
+    def create_table_randomisation_week(self, week):
 
         random_week2_data = pd.read_excel(self.path_to_rand_w2_sheet)
 
         conn = sqlite3.connect(self.db_filename)
         cursor = conn.cursor()
 
-        querie_create_table_rand_w2 = """CREATE TABLE IF NOT EXISTS Random_Woche_2(
+        querie_create_table_rand_w2 = """CREATE TABLE IF NOT EXISTS Random_Woche_{}(
                                     Patient_Id smallint,
                                     Zentrum smallint,
                                     Behandlungsarm varchar(255),
                                     Datum date
-                                  )"""
+                                  )""".format(week)
 
         cursor.execute(querie_create_table_rand_w2)
 
@@ -166,4 +125,4 @@ class Mamphi:
 
         conn.close()
 
-        print('Successfully created database table Random_Week_2')
+        print('Successfully created database table Random_Week_{}'.format(week))
