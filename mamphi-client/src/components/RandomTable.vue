@@ -31,7 +31,7 @@ export default {
     },
 
     mounted(){
-        fetch("http://127.0.0.1:5000/mamphi/random-week1")
+        fetch("http://127.0.0.1:5000/mamphi/random/week1")
         .then(response => response.json())
         .then(json => (this.list = JSON.parse(json)));
     }

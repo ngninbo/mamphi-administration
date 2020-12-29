@@ -42,7 +42,7 @@ function displayTableWeek2() {
             let xhr = new XMLHttpRequest();
             // 2. HTTP-Anfrage initialisieren (hier:
             // REST-Service, der die Liste von Zentren liefert)
-            xhr.open("Get", "http://127.0.0.1:5000/mamphi/random-week2");
+            xhr.open("Get", "http://127.0.0.1:5000/mamphi/random/week2");
             // 3 Gewünschtes Datenformat setzen
             xhr.responseType = "json"
                 // 4. Anfrage senden

@@ -45,7 +45,7 @@ def get_center():
     return jsonify(fetcher.fetch_center())
 
 
-@app.route('/mamphi/random-week1')
+@app.route('/mamphi/random/week1')
 @cross_origin()
 def get_rand_w1():
     return jsonify(fetcher.fetch_rand_week(week=1))
@@ -69,7 +69,7 @@ def upload_consent():
     return jsonify(consent_json)
 
 
-@app.route('/mamphi/random-week2')
+@app.route('/mamphi/random/week2')
 @cross_origin()
 def get_ran_w2():
     return jsonify(fetcher.fetch_rand_week(week=2))
