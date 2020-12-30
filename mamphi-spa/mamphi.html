@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Mamphi - Studie Verwaltung</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='stylesheets/style.css')}}">
+    <link rel="icon" href="favicon.ico">
+    <link type="text/css" rel="stylesheet" href="mamphi.css">
 </head>
 
 <body>
@@ -17,6 +17,7 @@
             <a href="#" class="navbar-item" id="description-btn">Beschreibung</a>
             <a href="#" class="navbar-item" id="center-list-btn">Zentrumliste</a>
             <a href="#" class="navbar-item" id="consent-list-btn">Patienteneinwilligungen</a>
+            <a href="#" class="navbar-item" id="week-btn">Randomisierungswochen</a>
             <a href="#" class="navbar-item" id="rand-w1-btn">Randomisierungswoche 1</a>
             <a href="#" class="navbar-item" id="rand-w2-btn">Randomisierungswoche 2</a>
             <a href="#" class="navbar-item" id="monitoring-btn">Monitoringsplan</a>
@@ -28,23 +29,23 @@
             </footer>
         </div>
     </div>
+
     <main>
+
         <div class="main">
             <div class="user-greet">
-                <p>Hallo {{name.upper()}}, <a href="{{ url_for('logout') }}" class="navbar-item">Auslogen</a>
-                </p>
+                <p>Hallo {{name.upper()}}</p>
+                <a>Auslogen</a>
             </div>
             <div id="app">
                 <p>Bei Klick auf einem Element in der Navigtationsleiste links wird der Inhalt hier dargestellt</p>
             </div>
         </div>
-        <script src="{{ url_for('static', filename='scripts/center.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/consent.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/description.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/rand.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/rand2.js') }}"></script>
-        <script src="{{ url_for('static', filename='scripts/monitoring.js') }}"></script>
+        <script src="scripts/center.js"></script>
+        <script src="scripts/consent.js"></script>
+        <script src="scripts/description.js"></script>
+        <script src="scripts/rand.js"></script>
+        <script src="scripts/rand2.js"></script>
+        <script src="scripts/monitoring.js"></script>
     </main>
 </body>
-
-</html>

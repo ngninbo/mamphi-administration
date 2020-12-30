@@ -9,12 +9,100 @@ body {
     margin-right: 5%
 }
 
+
+/* The sidebar menu */
+
+.sidenav {
+    height: 100%;
+    /* Full-height: remove this if you want "auto" height */
+    width: 23%;
+    /* Set the width of the sidebar */
+    position: fixed;
+    /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1;
+    /* Stay on top */
+    top: 0;
+    /* Stay at the top */
+    left: 0;
+    background-color: darkorange;
+    /* Darkorange */
+    color: #202020;
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    padding-top: .1%;
+}
+
+
+/* The navigation menu links */
+
+.sidenav .navbar .navbar-item,
+.sidenav h1 {
+    padding: .6% .8% .6% .1%;
+    text-decoration: none;
+    font-size: 22px;
+    color: #202020;
+    display: block;
+}
+
+
+/* When you mouse over the navigation links, change their color */
+
+.sidenav .navbar-item:hover {
+    color: #f1f1f1;
+}
+
+
+/* Style page content */
+
+.main {
+    margin-left: 21%;
+}
+
+.main .user-greet {
+    margin-left: 70%;
+}
+
+.main .user-greet a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    margin: 5% 1%;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav .sidenav-item {
+        font-size: 18px;
+    }
+}
+
+footer {
+    margin-top: 55%;
+    margin-left: 0%;
+}
+
+footer p a {
+    text-decoration: none;
+    color: inherit;
+}
+
+footer p a:hover {
+    color: white;
+}
+
 table {
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 120%;
     table-layout: fixed;
 }
 
@@ -77,29 +165,6 @@ table th {
     table td:last-child {
         border-bottom: 0;
     }
-}
-
-.navbar {
-    background-color: lightslategray;
-    font-size: 1em;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: white;
-    padding: 8px 5px 8px 5px;
-}
-
-.navbar a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.navbar-brand {
-    font-size: 1.2em;
-    font-weight: 600;
-}
-
-.navbar-item {
-    font-variant: small-caps;
-    margin-left: 30px;
 }
 
 .body-content {

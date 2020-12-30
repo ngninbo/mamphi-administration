@@ -9,47 +9,34 @@
 </head>
 
 <body>
-    <header>
-        <h1>Hallo {{name.upper()}}</h1>
-        <div>
-            <div class="navbar">
-                <a href="#" class="navbar-brand" id="description-btn">Beschreibung</a>
-                <a href="#" class="navbar-item" id="center-list-btn">Zentrumliste</a>
-                <a href="#" class="navbar-item" id="consent-list-btn">Patienteneinwilligungen</a>
-                <a href="#" class="navbar-item" id="rand-w1-btn">Randomisierungswoche 1</a>
-                <a href="#" class="navbar-item" id="rand-w2-btn">Randomisierungswoche 2</a>
-                <a href="#" class="navbar-item" id="monitoring-btn">Monitoringsplan</a>
-                <a href="{{ url_for('auth.logout') }}" class="navbar-item">Auslogen</a>
-            </div>
-
+    <div class="sidenav">
+        <header>
+            <h1>Mamphi - Studie Verwaltung</h1>
+        </header>
+        <div class="navbar">
+            <a href="#" class="navbar-item" id="description-btn">Beschreibung</a>
+            <a href="#" class="navbar-item" id="center-list-btn">Zentrumliste</a>
+            <a href="#" class="navbar-item" id="consent-list-btn">Patienteneinwilligungen</a>
+            <a href="#" class="navbar-item" id="rand-w1-btn">Randomisierungswoche 1</a>
+            <a href="#" class="navbar-item" id="rand-w2-btn">Randomisierungswoche 2</a>
+            <a href="#" class="navbar-item" id="monitoring-btn">Monitoringsplan</a>
+            <footer>
+                <hr/>
+                <p>Studienmanagement und Software, Sommersemester 2019</p>
+                <p>&copy; 2019-2020 FHDO Master MI Software zur Verwaltung der Mamphi-Studie.</p>
+                <p>Developed and maintained by Beauclair Ngnintedem D.</p>
+            </footer>
         </div>
-    </header>
+    </div>
     <main>
-        <div id="app">
-            <section>
-                <h1>Beschreibung der Studie</h1>
-                <div>
-                    <div>
-                        <h2>Design</h2>
-                        <ul>
-                            <li>Doppelblind</li>
-                            <li>Randomisiert</li>
-                            <li>Parallelgruppen: Mamphi gegen Placebo</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2>Indikationen</h2>
-                        <p>Chronische Kopfschmerzen</p>
-                    </div>
-                    <div>
-                        <h2>Studienzentren</h2>
-                        <ul>
-                            <li>Deutschland</li>
-                            <li>Gro&#xDF;britanien</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+        <div class="main">
+            <div class="user-greet">
+                <p>Hallo {{name.upper()}}, <a href="{{ url_for('auth.logout') }}" class="navbar-item">Auslogen</a>
+                </p>
+            </div>
+            <div id="app">
+                <p>Bei Klick auf einem Element in der Navigtationsleiste links wird der Inhalt hier dargestellt.</p>
+            </div>
         </div>
         <script src="{{ url_for('static', filename='scripts/center.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/consent.js') }}"></script>
@@ -58,12 +45,6 @@
         <script src="{{ url_for('static', filename='scripts/rand2.js') }}"></script>
         <script src="{{ url_for('static', filename='scripts/monitoring.js') }}"></script>
     </main>
-    <hr/>
-    <footer>
-        <p>Studienmanagement und Software, Sommersemester 2019</p>
-        <p>&copy; 2019-2020 FHDO Master MI Software zur Verwaltung der Mamphi-Studie.</p>
-        <p>Developed and maintained by Beauclair Ngnintedem D.</p>
-    </footer>
 </body>
 
 </html>

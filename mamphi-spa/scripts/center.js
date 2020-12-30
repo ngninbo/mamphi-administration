@@ -17,7 +17,7 @@ zentren.addEventListener('click', function() {
         <option value="1">Neues Zentrum anlegen</option>
         <option value="2">Zentrum löschen</option>
         <option value="3">Liste aller Zentren anzeigen</option>
-        </select><button id="action-btn">AusfühSren</button>
+        </select><button id="action-btn">Ausführen</button>
         </p>
         </div>
         <div id="center-admin"></div>

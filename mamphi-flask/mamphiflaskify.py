@@ -54,7 +54,7 @@ def user_loader(user_id):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return redirect(url_for('login'))
 
 
 @app.route('/login')

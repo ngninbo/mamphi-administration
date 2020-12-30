@@ -12,6 +12,7 @@ consent_btn.addEventListener('click', function() {
 
     body.innerHTML = `<section>
     <div>
+        <h2>Liste der Patienteneinwilligungen</h2>
         <p>
             <label>Einwillungen:</label>
             <select id="selected-option">
