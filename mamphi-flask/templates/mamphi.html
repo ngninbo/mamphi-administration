@@ -14,17 +14,15 @@
             <h1>Mamphi - Studie Verwaltung</h1>
         </header>
         <div class="navbar">
-            <a href="#" class="navbar-item" id="description-btn">Beschreibung</a>
+            <a href="#" class="navbar-item" id="description-btn">Übersicht</a>
             <a href="#" class="navbar-item" id="center-list-btn">Zentrumliste</a>
             <a href="#" class="navbar-item" id="consent-list-btn">Patienteneinwilligungen</a>
             <a href="#" class="navbar-item" id="rand-w1-btn">Randomisierungswoche 1</a>
             <a href="#" class="navbar-item" id="rand-w2-btn">Randomisierungswoche 2</a>
             <a href="#" class="navbar-item" id="monitoring-btn">Monitoringsplan</a>
             <footer>
-                <hr/>
-                <p>Studienmanagement und Software, Sommersemester 2019</p>
-                <p>&copy; 2019-2020 FHDO Master MI Software zur Verwaltung der Mamphi-Studie.</p>
-                <p>Developed and maintained by Beauclair Ngnintedem D.</p>
+                <hr />
+                <p>&copy; 2019-2020 Fachhochschule Dortmund Beauclair Ngnintedem D.</p>
             </footer>
         </div>
     </div>
@@ -35,7 +33,34 @@
                 </p>
             </div>
             <div id="app">
-                <p>Bei Klick auf einem Element in der Navigtationsleiste links wird der Inhalt hier dargestellt</p>
+                <h2>Willkommen auf der Webanwendung zur Verwaltung der Mamphi-Studie</h2>
+                <div>
+                    <p>Die Entwicklung der vorliedenden Anwendung berührt auf einem Softwareprojekt im Rahmen der Masterveranstaltung <strong>Studienmanagement und Software</strong> aus dem Sommersemester 2019.
+                    </p>
+                    <p>Die Anwendung bietet neben Benutzerverwaltung auch folgenden Funktionen:</p>
+                    <ul>
+                        <li>
+                            Verwaltung der Zentrumsliste
+                        </li>
+                        <li>
+                            Verwaltung der Patientenliste
+                        </li>
+                        <li>
+                            Erstellung einer wöchentlichen Liste: Anzahl Studienpatienten pro Zentrum und Land
+                        </li>
+                        <li> Verwaltung der Liste mit den Patienteneinwilligungen </li>
+                        <li>Erstellung von Listen:
+                            <ul>
+                                <li>PatientInnen, bei denen die Einwilligungserklärung fehlt </li>
+                                <li>PatientInnen, bei denen die Einwilligungserklärung unvollständig ist (d.h. Daten fehlen) </li>
+                                <li>Patientinnen, bei denen die Einwilligung nach der Randomisierung erfolgte</li>
+                            </ul>
+                        </li>
+                        <li> Erstellung eines Monitoring-Plans (Planung, wann welcher Monitor welches Zentrum besuchen soll) nach festgelegten Regeln </li>
+                    </ul>
+                    <p>Die hier dargestellten Liste beinhalten ausschließlich Dummy-Daten aus Excel-Dateien, die im Rahmen der o.g. Veranstaltung zur Verfügung gestellt wurden.</p>
+                </div>
+                <p>Mit der links dargestellten Navigtationsleiste lassen sich die Übersicht der Studie sowie die Listen zur Verwaltung anzeigen.</p>
             </div>
         </div>
         <script src="{{ url_for('static', filename='scripts/center.js') }}"></script>

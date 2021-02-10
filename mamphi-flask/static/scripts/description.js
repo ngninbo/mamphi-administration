@@ -3,7 +3,7 @@ description.addEventListener('click', function() {
     let body = document.getElementById('app');
 
     body.innerHTML = `<section>
-    <h1>Beschreibung der Studie</h1>
+    <h1>Übersicht der Studie</h1>
     <div>
         <div>
             <h2>Design</h2>

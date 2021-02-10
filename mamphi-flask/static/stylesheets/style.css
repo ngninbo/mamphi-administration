@@ -4,6 +4,7 @@
 
 body {
     font-family: "Open Sans", sans-serif;
+    background: #1e399c29;
     line-height: 1.25;
     margin-left: 5%;
     margin-right: 5%
@@ -24,7 +25,7 @@ body {
     top: 0;
     /* Stay at the top */
     left: 0;
-    background-color: darkorange;
+    background-color: #28d;
     /* Darkorange */
     color: #202020;
     overflow-x: hidden;
@@ -68,7 +69,7 @@ body {
 }
 
 .navbar {
-    margin: 5% 1%;
+    margin: 15% 1%;
 }
 
 
@@ -84,7 +85,7 @@ body {
 }
 
 footer {
-    margin-top: 55%;
+    margin-top: 60%;
     margin-left: 0%;
 }
 
@@ -124,6 +125,8 @@ table th {
     text-transform: uppercase;
 }
 
+
+/*
 @media screen and (max-width: 600px) {
     table {
         border: 0;
@@ -157,7 +160,9 @@ table th {
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-        content: attr(data-label);
+
+
+/*    content: attr(data-label);
         float: left;
         font-weight: bold;
         text-transform: uppercase;
@@ -165,7 +170,7 @@ table th {
     table td:last-child {
         border-bottom: 0;
     }
-}
+}*/
 
 .body-content {
     padding: 5px;
@@ -174,12 +179,6 @@ table th {
 
 header>h1 {
     text-align: center;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-body {
-    background: #1e399c29;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .login {
