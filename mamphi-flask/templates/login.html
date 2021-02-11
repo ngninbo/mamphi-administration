@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 
 <head>
     <meta charset="utf-8">
+    <meta name="Description" content="Mamphi Administration Web Application">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Mamphi - Studie Verwaltung</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='stylesheets/style.css')}}">
 </head>
 
 <body>
-<header>
-    <h1>Mamphi-Studie Verwaltung</h1>
-</header>
+    <header>
+        <h1>Mamphi-Studie Verwaltung</h1>
+    </header>
     <main>
 
         <div class="login">
@@ -25,11 +28,11 @@
             <h2 class="login-header">Bitte melden Sie sich an</h2>
 
             <form class="login-container" method="post">
-                <p><input type="email" name="username" placeholder="Email" required></p>
-                <p><input type="password" name="password" placeholder="Password" required></p>
-                <p><input type="submit" value="Anmelden"></p>
+                <p><label for="email"></label><input id="email" type="email" name="username" placeholder="Email" required></p>
+                <p><label for="password"></label><input id="password" type="password" name="password" placeholder="Password" required></p>
+                <p><label for="submit"></label><input id="submit" type="submit" value="Anmelden"></p>
             </form>
-			<p>Haben Sie noch kein Zugangsdaten? Dann fragen Sie bitte mal dem Administrator der Anwendung.</p>
+            <p>Haben Sie noch kein Zugangsdaten? Dann fragen Sie bitte mal dem Administrator der Anwendung.</p>
         </div>
     </main>
 </body>
