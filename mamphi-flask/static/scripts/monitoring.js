@@ -14,13 +14,13 @@ monitoring.addEventListener('click', function() {
     <table>
     <thead>
         <tr>
-            <th>Zentrum</th>
-            <th>Land</th>
-            <th>Ort</th>
-            <th>Pr&#xFC;fer</th>
-            <th>Monitor</th>
-            <th>Anzahl Patienten</th>
-            <th colspan="5">Monitorbesuche</th>
+            <td>Zentrum</td>
+            <td>Land</td>
+            <td>Ort</td>
+            <td>Pr&#xFC;fer</td>
+            <td>Monitor</td>
+            <td>Anzahl Patienten</td>
+            <td colspan="5">Monitorbesuche</td>
         </tr>
         </thead>
         <tbody id=monitoring-plan>
