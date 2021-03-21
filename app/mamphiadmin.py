@@ -104,17 +104,17 @@ def description():
 @app.route("/mamphi/center%list")
 @login_required
 def center():
-    zentren = json.loads(fetcher.fetch_center())
+    zentren = fetcher.fetch_center()
     return render_template("center.html", zentren=zentren, name=current_user.username)
 
 
 @app.route("/mamphi/patient%consent")
 @login_required
 def consent():
-    consents = json.loads(fetcher.fetch_consent())
-    incomplete_consents = json.loads(fetcher.fetch_incomplete_consent())
-    missing_consents = json.loads(fetcher.fetch_missing_consent())
-    consents_after_randomization = json.loads(fetcher.fetch_consent_after_randomisation())
+    consents = fetcher.fetch_consent()
+    incomplete_consents = fetcher.fetch_consent_list(consent="incomplete")
+    missing_consents = fetcher.fetch_consent_list(consent="missing")
+    consents_after_randomization = fetcher.fetch_consent_list(consent=None)
 
     options = [
         {'text': "Bitte Liste auswählen", 'value': None},
@@ -132,7 +132,7 @@ def consent():
 @app.route("/mamphi/randomisation%week=1")
 @login_required
 def random_w_1():
-    results = json.loads(fetcher.fetch_rand_w1())
+    results = fetcher.fetch_rand_week(week=1)
 
     return render_template("random_w_1.html", results=results, name=current_user.username)
 
@@ -140,7 +140,7 @@ def random_w_1():
 @app.route("/mamphi/randomisation%week=2")
 @login_required
 def random_w_2():
-    results = json.loads(fetcher.fetch_rand_w2())
+    results = fetcher.fetch_rand_week(week=2)
 
     return render_template("random_w_2.html", results=results, name=current_user.username)
 
@@ -148,7 +148,7 @@ def random_w_2():
 @app.route("/mamphi/monitor/planing")
 @login_required
 def monitoring():
-    results = json.loads(fetcher.retrieve_monitoring_plan())
+    results = fetcher.retrieve_monitoring_plan()
 
     return render_template("monitorplan.html", monitoringplan=results, name=current_user.username)
 

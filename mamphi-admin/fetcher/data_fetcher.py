@@ -20,9 +20,9 @@ class MamphiDataFetcher:
 
         conn.commit()
         conn.close()
-        results_json = json.dumps([dict(ix) for ix in results])
+        # results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def fetch_consent(self):
         conn = sqlite3.connect(self.mamphi_db)
@@ -34,9 +34,9 @@ class MamphiDataFetcher:
 
         conn.commit()
         conn.close()
-        results_json = json.dumps([dict(ix) for ix in results])
+        # results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def fetch_rand_week(self, week):
         conn = sqlite3.connect(self.mamphi_db)
@@ -48,42 +48,26 @@ class MamphiDataFetcher:
 
         conn.commit()
         conn.close()
-        results_json = json.dumps([dict(ix) for ix in results])
+        # results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def get_center_by_land(self, land):
 
-        if land == "Germany":
-            conn = sqlite3.connect(self.mamphi_db)
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
 
-            statement = "SELECT * FROM Zentren WHERE Land = 'D'"
+        statement = "SELECT * FROM Zentren WHERE Land = '{}'".format(land)
 
-            cursor.execute(statement)
-            results = cursor.fetchall()
+        cursor.execute(statement)
+        results = cursor.fetchall()
 
-            conn.commit()
-            conn.close()
-            german_center = json.dumps([dict(ix) for ix in results])
-            # number_patient = len(list_patient)
-            return german_center
-
-        elif land == "UK":
-            conn = sqlite3.connect(self.mamphi_db)
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            statement = "SELECT * FROM Zentren WHERE Land = 'GB'"
-            cursor.execute(statement)
-            results = cursor.fetchall()
-
-            conn.commit()
-            conn.close()
-            uk_center = json.dumps([dict(ix) for ix in results])
-            # number_patient = len(list_patient)
-            return uk_center
+        conn.commit()
+        conn.close()
+        # center_list = json.dumps([dict(ix) for ix in results])
+        # number_patient = len(list_patient)
+        return [dict(ix) for ix in results]
 
     def update_zentren(self, center_json):
         """
@@ -199,10 +183,10 @@ class MamphiDataFetcher:
         conn.commit()
         conn.close()
         # results_json = json.dumps([dict(ix) for ix in results])
-        list_patient = json.dumps([dict(ix) for ix in results])
+        # list_patient = json.dumps([dict(ix) for ix in results])
         # number_patient = len(list_patient)
 
-        return list_patient
+        return [dict(ix) for ix in results]
 
     def fetch_consent_list(self, consent):
         conn = sqlite3.connect(self.mamphi_db)
@@ -220,9 +204,9 @@ class MamphiDataFetcher:
 
         conn.commit()
         conn.close()
-        results_json = json.dumps([dict(ix) for ix in results])
+        # results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def get_number_of_patient_per_center_by_week(self, week):
 
@@ -240,7 +224,7 @@ class MamphiDataFetcher:
 
         results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def get_number_patient_per_center_per_country_by_week(self, week):
         """
@@ -248,12 +232,12 @@ class MamphiDataFetcher:
         :return: Return list of patient per center in both country
         """
 
-        weekly_list_german = json.loads(self.get_number_patient_per_center_by_week_in_country(week, 'D'))
-        weekly_list_uk = json.loads(self.get_number_patient_per_center_by_week_in_country(week, 'GB'))
+        weekly_list_german = self.get_number_patient_per_center_by_week_in_country(week, 'D')
+        weekly_list_uk = self.get_number_patient_per_center_by_week_in_country(week, 'GB')
 
         results = {'Germany': weekly_list_german, 'UK': weekly_list_uk}
 
-        return json.dumps(results)
+        return results
 
     def get_number_patient_per_center_by_week_in_country(self, week, country):
 
@@ -275,7 +259,7 @@ class MamphiDataFetcher:
 
         results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def fetch_center_ids(self):
 
@@ -288,7 +272,7 @@ class MamphiDataFetcher:
 
         center_ids = [dict(idx) for idx in results]
 
-        return json.dumps(center_ids)
+        return [dict(ix) for ix in results]
 
     def remove_center_by_id(self, center_id):
         conn = sqlite3.connect(self.mamphi_db)
@@ -332,7 +316,7 @@ class MamphiDataFetcher:
 
         results_json = json.dumps([dict(ix) for ix in results])
 
-        return results_json
+        return [dict(ix) for ix in results]
 
     def retrieve_monitoring_plan(self):
 
@@ -374,4 +358,4 @@ class MamphiDataFetcher:
                     visites = pd.date_range(start='6/1/2019', periods=5, freq='M')
                     item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
 
-        return json.dumps(results_dict)
+        return results_dict

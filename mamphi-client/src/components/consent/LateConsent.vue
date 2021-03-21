@@ -12,7 +12,7 @@
           <tbody id="consent-list">
             <consent-card
               class="consent-item"
-              v-for="consent in incompleted_consents"
+              v-for="consent in late_consents"
               v-bind:consent="consent"
               v-bind:key="consent.Patient_Id"
             ></consent-card>
@@ -24,10 +24,10 @@
 <script>
 import ConsentCard from './ConsentCard'
 export default {
-    name: 'consent-incomplete',
+    name: 'late-consent',
     data: function(){
         return {
-            incompleted_consents: []
+            late_consents: []
         };
     },
     components: {
@@ -35,9 +35,9 @@ export default {
     },
 
     mounted(){
-        fetch("http://127.0.0.1:5000/mamphi/consents/incomplete")
+        fetch("http://127.0.0.1:5000/mamphi/consents/later")
         .then(response => response.json())
-        .then(json => (this.incompleted_consents = JSON.parse(json)));
+        .then(json => (this.late_consents = json));
     }
 
 }

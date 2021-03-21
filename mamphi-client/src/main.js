@@ -4,10 +4,10 @@ import App from './App.vue'
 
 // Import Components
 import StudieDescription from './components/StudieDescription.vue'
-import InformedConsent from './components/InformedConsent.vue'
-import CenterList from './components/CenterList.vue'
-import RandomWeek from './components/RandomWeek.vue'
-import RandomWeek2 from './components/RandomWeek2.vue'
+import InformedConsent from './components/consent/InformedConsent.vue'
+import CenterList from './components/center/CenterList.vue'
+import RandomWeek from './components/randomWeek/RandomWeek.vue'
+import RandomWeek2 from './components/randomWeek/RandomWeek2.vue'
 import MonitoringPlan from './components/MonitoringPlan.vue'
 
 Vue.config.productionTip = false

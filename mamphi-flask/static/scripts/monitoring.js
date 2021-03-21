@@ -3,7 +3,7 @@ let monitoring = document.getElementById("monitoring-btn");
 var planing = "";
 fetch('http://127.0.0.1:5000/mamphi/monitor/planing')
     .then(response => response.json())
-    .then(json => (planing = JSON.parse(json)))
+    .then(json => (planing = json))
 
 monitoring.addEventListener('click', function() {
 

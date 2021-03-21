@@ -1,4 +1,5 @@
 <template>
+<div>
     <table>
           <thead>
             <tr>
@@ -11,32 +12,33 @@
           <tbody id="consent-list">
             <consent-card
               class="consent-item"
-              v-for="consent in list"
+              v-for="consent in missing_consents"
               v-bind:consent="consent"
               v-bind:key="consent.Patient_Id"
             ></consent-card>
           </tbody>
         </table>
+</div>
 </template>
 
 <script>
 import ConsentCard from './ConsentCard'
-
 export default {
-    name: 'consent-table',
+    name: 'consent-missing',
     data: function(){
-      return{
-        list: []
-      };
+        return {
+            missing_consents: []
+        };
     },
-
-    components:{
+    components: {
         ConsentCard: ConsentCard
     },
-    mounted() {
-    fetch("http://127.0.0.1:5000/mamphi/consents")
-      .then(response => response.json())
-      .then(json => (this.list = JSON.parse(json)));
-  }
-};
+
+    mounted(){
+        fetch("http://127.0.0.1:5000/mamphi/consents/missing")
+        .then(response => response.json())
+        .then(json => (this.missing_consents = json));
+    }
+
+}
 </script>

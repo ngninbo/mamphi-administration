@@ -3,7 +3,7 @@ let zentren = document.querySelector("#center-list-btn");
 var center_list = "";
 fetch('http://127.0.0.1:5000/mamphi/center')
     .then(response => response.json())
-    .then(json => (center_list = JSON.parse(json)))
+    .then(json => (center_list = json))
 
 zentren.addEventListener('click', function() {
     let body = document.getElementById("app");

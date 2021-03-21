@@ -1,5 +1,4 @@
 <template>
-<div>
     <table>
           <thead>
             <tr>
@@ -12,33 +11,32 @@
           <tbody id="consent-list">
             <consent-card
               class="consent-item"
-              v-for="consent in late_consents"
+              v-for="consent in list"
               v-bind:consent="consent"
               v-bind:key="consent.Patient_Id"
             ></consent-card>
           </tbody>
         </table>
-</div>
 </template>
 
 <script>
 import ConsentCard from './ConsentCard'
+
 export default {
-    name: 'late-consent',
+    name: 'consent-table',
     data: function(){
-        return {
-            late_consents: []
-        };
+      return{
+        list: []
+      };
     },
-    components: {
+
+    components:{
         ConsentCard: ConsentCard
     },
-
-    mounted(){
-        fetch("http://127.0.0.1:5000/mamphi/consents/later")
-        .then(response => response.json())
-        .then(json => (this.late_consents = JSON.parse(json)));
-    }
-
-}
+    mounted() {
+    fetch("http://127.0.0.1:5000/mamphi/consents")
+      .then(response => response.json())
+      .then(json => (this.list = json));
+  }
+};
 </script>
