@@ -96,14 +96,10 @@ class MamphiDataFetcher:
         # Compute center Id manually
         values = []
         if center['Land'] == "D":
-            german_center = self.get_center_list_country(country="D")
-            german_center = pd.read_json(german_center)
-            zentrum_id = german_center['Zentrum_Id'].max() + 1
+            zentrum_id = self.getMaxZentrumID(country='D') + 1
             values.append(zentrum_id)
         else:
-            uk_center = self.get_center_list_country(country="GB")
-            uk_center = pd.read_json(uk_center)
-            zentrum_id = uk_center['Zentrum_Id'].max() + 1
+            zentrum_id = self.getMaxZentrumID(country='GB') + 1
             values.append(zentrum_id)
 
         for idx in center.values():
@@ -123,14 +119,36 @@ class MamphiDataFetcher:
 
         conn.close()
 
+    def getMaxZentrumID(self, country):
+
+        statement = "SELECT max(Zentrum_Id) as MAX_ID " \
+                    "FROM Zentren WHERE Land = '{}'".format(country)
+
+        conn = sqlite3.connect(self.mamphi_db)
+        cursor = conn.cursor()
+        response = cursor.execute(statement)
+        result = response.fetchall()
+
+        return result[0][0]
+
+    def getMaxPatientID(self):
+
+        statement = "SELECT max(Patient_Id) " \
+                    "FROM Informed_consent" \
+
+        conn = sqlite3.connect(self.mamphi_db)
+        cursor = conn.cursor()
+        response = cursor.execute(statement)
+        result = response.fetchall()
+
+        return result[0][0]
+
     def update_consent(self, consent_json):
 
         consent_item = json.loads(consent_json)
         values = []
-        # compute patient id manually
-        consent_list = self.fetch_consent()
-        consent_list = pd.read_json(consent_list)
-        patient_id = consent_list['Patient_Id'].max() + 1
+        # search for max patient id
+        patient_id = self.getMaxPatientID() + 1
 
         values.append(patient_id)
 
@@ -208,39 +226,56 @@ class MamphiDataFetcher:
 
     def get_number_of_patient_per_center_by_week(self, week):
 
-        results = self.fetch_rand_week(week=week)
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
 
-        data = pd.read_json(results)
+        statement = "SELECT Random_Woche_{}.Zentrum, COUNT(Random_Woche_{}.Zentrum) as Number_Of_Patient" \
+                    "FROM Random_Woche_{} GROUP BY Random_Woche_2.Zentrum;".format(week, week, week)
 
-        number_patient_per_center = data.groupby(['Zentrum'])['Patient_Id'].count()
+        cursor.execute(statement)
+        results = cursor.fetchall()
+        conn.commit()
+        conn.close()
 
-        center = [idx for idx in number_patient_per_center.index]
-        number_of_patient = [value for value in number_patient_per_center.values]
+        results_json = json.dumps([dict(ix) for ix in results])
 
-        df = pd.DataFrame({'Zentrum': center, 'Number_Of_Patient': number_of_patient})
-        weekly_list = df.to_json(orient='records')
-
-        return weekly_list
+        return results_json
 
     def get_number_patient_per_center_per_country_by_week(self, week):
         """
 
         :return: Return list of patient per center in both country
         """
-        weekly_list = self.get_number_of_patient_per_center_by_week(week=week)
-        load_list = json.loads(weekly_list)
-        list_german = []
-        list_uk = []
 
-        for el in load_list:
-            if el['Zentrum'] < 200:
-                list_german.append(el)
-            else:
-                list_uk.append(el)
+        weekly_list_german = json.loads(self.get_number_patient_per_center_by_week_in_country(week, 'D'))
+        weekly_list_uk = json.loads(self.get_number_patient_per_center_by_week_in_country(week, 'GB'))
 
-        results = {'Germany': list_german, 'UK': list_uk}
+        results = {'Germany': weekly_list_german, 'UK': weekly_list_uk}
 
         return json.dumps(results)
+
+    def get_number_patient_per_center_by_week_in_country(self, week, country):
+
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        statement = "SELECT tab1.Zentrum as Zentrum, tab1.Anzahl as Number_Of_Patient, tab2.Land " \
+                    "FROM " \
+                    "(SELECT Random_Woche_{}.Zentrum, COUNT(Random_Woche_{}.Zentrum) as Anzahl " \
+                    "FROM Random_Woche_{} GROUP BY Random_Woche_{}.Zentrum) tab1 LEFT JOIN " \
+                    "(SELECT Zentrum_Id, Land FROM Zentren) tab2 ON tab1.Zentrum = tab2.Zentrum_Id " \
+                    "WHERE Land = '{}'".format(week, week, week, week, country)
+
+        cursor.execute(statement)
+        results = cursor.fetchall()
+        conn.commit()
+        conn.close()
+
+        results_json = json.dumps([dict(ix) for ix in results])
+
+        return results_json
 
     def fetch_center_ids(self):
 
@@ -274,37 +309,69 @@ class MamphiDataFetcher:
         print("An item have been removed")
 
     def retrieve_centres_with_number_of_patient(self):
-        week1 = self.get_number_of_patient_per_center_by_week(week=1)
-        week2 = self.get_number_of_patient_per_center_by_week(week=2)
 
-        week1_df = pd.read_json(week1)
-        week2_df = pd.read_json(week2)
+        statement = "SELECT Zentrum_Id, Number_Of_Patient " \
+                    "FROM " \
+                    "(SELECT Zentrum_Id FROM Zentren ORDER BY Zentrum_Id ASC) " \
+                    "LEFT JOIN (SELECT Zentrum, SUM(Anzahl) as Number_Of_Patient " \
+                    "FROM " \
+                    "(SELECT Random_Woche_1.Zentrum, COUNT(Random_Woche_1.Zentrum) as Anzahl " \
+                    "FROM Random_Woche_1 GROUP BY Random_Woche_1.Zentrum " \
+                    "UNION SELECT Random_Woche_2.Zentrum, COUNT(Random_Woche_2.Zentrum) as Anzahl " \
+                    "FROM Random_Woche_2 GROUP BY Random_Woche_2.Zentrum) " \
+                    "GROUP BY Zentrum) ON Zentrum_Id = Zentrum;"
 
-        sum_weekly_records = pd.concat([week1_df, week2_df], ignore_index=True)
-        records = sum_weekly_records.groupby(['Zentrum']).sum()
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
 
-        centres = self.fetch_center()
-        centres = pd.read_json(centres)
-        centres['NP'] = 0
+        cursor.execute(statement)
+        results = cursor.fetchall()
+        conn.commit()
+        conn.close()
 
-        for idx in records.index:
-            centres.loc[centres['Zentrum_Id'] == idx, 'NP'] = records['Number_Of_Patient'][idx]
+        results_json = json.dumps([dict(ix) for ix in results])
 
-        return centres.to_json(orient='records')
+        return results_json
 
     def retrieve_monitoring_plan(self):
-        centres = self.retrieve_centres_with_number_of_patient()
-        data = json.loads(centres)
 
-        for item in data:
-            if 0 < item['NP'] < 5:
-                visites = pd.date_range(start='6/1/2019', periods=5, freq='3M')
-                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
-            elif 4 < item['NP'] < 10:
-                visites = pd.date_range(start='6/1/2019', periods=5, freq='2M')
-                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
-            elif item['NP'] >= 10:
-                visites = pd.date_range(start='6/1/2019', periods=5, freq='M')
-                item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+        statement = "SELECT tab1.Zentrum_Id, tab1.Land, tab1.Ort, tab1.Pruefer, tab1.Monitor, tab2.Gesamtanzahl as NP " \
+                    "FROM " \
+                    "(SELECT * FROM Zentren ORDER BY Zentrum_Id ASC) tab1 " \
+                    "JOIN (SELECT Zentrum_Id, Gesamtanzahl " \
+                    "FROM " \
+                    "(SELECT Zentrum_Id FROM Zentren ORDER BY Zentrum_Id ASC) " \
+                    "LEFT JOIN (SELECT Zentrum, SUM(Anzahl) as Gesamtanzahl " \
+                    "FROM " \
+                    "(SELECT Random_Woche_1.Zentrum, COUNT(Random_Woche_1.Zentrum) as Anzahl " \
+                    "FROM Random_Woche_1 GROUP BY Random_Woche_1.Zentrum " \
+                    "UNION SELECT Random_Woche_2.Zentrum, COUNT(Random_Woche_2.Zentrum) as Anzahl " \
+                    "FROM Random_Woche_2 GROUP BY Random_Woche_2.Zentrum) " \
+                    "GROUP BY Zentrum) ON Zentrum_Id = Zentrum) tab2 ON tab1.Zentrum_Id = tab2.Zentrum_Id;"
 
-        return json.dumps(data)
+        conn = sqlite3.connect(self.mamphi_db)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        cursor.execute(statement)
+        results = cursor.fetchall()
+        conn.commit()
+        conn.close()
+
+        results_dict = [dict(ix) for ix in results]
+
+        for item in results_dict:
+
+            if item['NP']:
+                if 0 < item['NP'] < 5:
+                    visites = pd.date_range(start='6/1/2019', periods=5, freq='3M')
+                    item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+                elif 4 < item['NP'] < 10:
+                    visites = pd.date_range(start='6/1/2019', periods=5, freq='2M')
+                    item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+                elif item['NP'] >= 10:
+                    visites = pd.date_range(start='6/1/2019', periods=5, freq='M')
+                    item['Monitor_Visite'] = visites.strftime("%Y-%m-%d").tolist()
+
+        return json.dumps(results_dict)
