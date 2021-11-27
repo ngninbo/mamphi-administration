@@ -38,7 +38,7 @@ export default {
     mounted(){
         fetch('http://127.0.0.1:5000/mamphi/consents')
         .then(response => response.json())
-        .then(json => (this.consent_list = json))
+        .then(json => (this.consent_list = JSON.parse(json)))
     }
 }
 </script>
