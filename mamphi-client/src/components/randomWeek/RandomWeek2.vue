@@ -49,7 +49,7 @@ export default {
     mounted(){
         fetch("http://127.0.0.1:5000/mamphi/patient/center/week2")
         .then(response => response.json())
-        .then(json => (this.list = JSON.parse(json)));
+        .then(json => (this.list = json));
     }
 }
 </script>
