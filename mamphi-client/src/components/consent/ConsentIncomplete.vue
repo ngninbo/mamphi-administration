@@ -37,7 +37,7 @@ export default {
     mounted(){
         fetch("http://127.0.0.1:5000/mamphi/consents/incomplete")
         .then(response => response.json())
-        .then(json => (this.incompleted_consents = JSON.parse(json)));
+        .then(json => (this.incompleted_consents = json));
     }
 
 }

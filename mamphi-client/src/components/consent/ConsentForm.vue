@@ -55,7 +55,7 @@ export default {
     mounted() {
         fetch('http://127.0.0.1:5000/mamphi/center/ids')
         .then(response => response.json())
-        .then(json => (this.center_ids = JSON.parse(json)))
+        .then(json => (this.center_ids = json))
     }
 }
 </script>
