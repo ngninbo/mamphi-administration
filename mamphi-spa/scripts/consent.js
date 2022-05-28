@@ -5,7 +5,7 @@ var consent_list = "";
 var center_ids = "";
 fetch('http://127.0.0.1:5000/mamphi/center/ids')
     .then(response => response.json())
-    .then(json => (center_ids = JSON.parse(json)))
+    .then(json => (center_ids = json))
 
 consent_btn.addEventListener('click', function() {
     let body = document.getElementById("app");
@@ -150,7 +150,7 @@ function uploadConsentTable(consent) {
     xhr.setRequestHeader("Content-Type", "application/json");
     // 4. Gewünsche Datenformat für die Antwort setzen und Anfrage senden (hier mit JSON-Daten)
     xhr.responseType = "json";
-    xhr.send(JSON.stringify(consent));
+    xhr.send(consent);
     // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, 
     // sobald die Antwort vollstandig vorliegt
     xhr.onload = () => {
@@ -190,12 +190,12 @@ function displayConsents() {
             xhr1.onload = () => {
                 let body = document.getElementById("consent-list");
 
-                for (let patient of JSON.parse(xhr1.response)) {
+                for (let patient of xhr1.response) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung.toUpperCase()}</td>
+                                <td>${patient.Einwilligung}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -218,12 +218,12 @@ function displayConsents() {
             xhr2.onload = () => {
                 let body = document.getElementById("consent-list");
 
-                for (let patient of JSON.parse(xhr2.response)) {
+                for (let patient of xhr2.response) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${ patient.Einwilligung.toUpperCase() }</td>
+                                <td>${patient.Einwilligung}</td>
                                 <td>${patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -245,13 +245,13 @@ function displayConsents() {
             // 5. Callback-Funtion für das "load"-Erreignis registrieren - die Funktion wird aufgerufen, sobald die Antwort vollstandig vorliegt
             xhr3.onload = () => {
                 var body = document.getElementById("consent-list");
-                consent_list = JSON.parse(xhr3.response);
+                consent_list = xhr3.response;
                 for (let patient of consent_list) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
                                 <td>${patient.Zentrum}</td>
-                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung.toUpperCase }</td>
+                                <td>${patient.Einwilligung === "nan" ? "" : patient.Einwilligung }</td>
                                 <td>${patient.Datum === "NaT" ? "": patient.Datum}</td>`;
 
                     body.appendChild(prop);
@@ -274,7 +274,7 @@ function displayConsents() {
             xhr4.onload = () => {
                 var body = document.getElementById("consent-list");
 
-                for (let patient of JSON.parse(xhr4.response)) {
+                for (let patient of xhr4.response) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>

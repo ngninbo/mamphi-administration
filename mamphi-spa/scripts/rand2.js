@@ -1,7 +1,7 @@
 var data_week2 = "";
-fetch('http://127.0.0.1:5000/mamphi/patient/center/week2')
+fetch('http://127.0.0.1:5000//mamphi/random/week2')
     .then(response => response.json())
-    .then(json => (data_week2 = JSON.parse(json)))
+    .then(json => (data_week2 = json))
 
 let rand_w2_list = document.querySelector("#rand-w2-btn");
 
@@ -51,7 +51,7 @@ function displayTableWeek2() {
             xhr.onload = () => {
                 let body = document.getElementById("rand-list");
 
-                for (let patient of JSON.parse(xhr.response)) {
+                for (let patient of xhr.response) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>

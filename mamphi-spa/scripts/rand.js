@@ -1,9 +1,9 @@
 let rand_w1_list = document.querySelector("#rand-w1-btn");
 
 var data_week1 = "";
-fetch('http://127.0.0.1:5000/mamphi/patient/center/week1')
+fetch('http://127.0.0.1:5000/mamphi/random/week1')
     .then(response => response.json())
-    .then(json => (data_week1 = JSON.parse(json)))
+    .then(json => (data_week1 = json))
 
 rand_w1_list.addEventListener('click', function() {
 
@@ -75,7 +75,7 @@ function displayTable() {
             let xhr = new XMLHttpRequest();
             // 2. HTTP-Anfrage initialisieren (hier:
             // REST-Service, der die Liste von Zentren liefert)
-            xhr.open("Get", "http://127.0.0.1:5000/mamphi/random-week1");
+            xhr.open("Get", "http://127.0.0.1:5000/mamphi/random/week1");
             // 3 Gewünschtes Datenformat setzen
             xhr.responseType = "json"
                 // 4. Anfrage senden
@@ -84,7 +84,7 @@ function displayTable() {
             xhr.onload = () => {
                 let body = document.getElementById("rand-list");
 
-                for (let patient of JSON.parse(xhr.response)) {
+                for (let patient of xhr.response) {
                     let prop = document.createElement("tr");
 
                     prop.innerHTML = `<td>${patient.Patient_Id}</td>
